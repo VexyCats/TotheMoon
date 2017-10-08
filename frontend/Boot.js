@@ -1,5 +1,7 @@
-var TheMoon = {};
+var TheMoon = {
 
+};
+	
  TheMoon.Boot = function(game){};
 
 TheMoon.Boot.prototype = {
@@ -18,6 +20,8 @@ this.load.image('preloaderBar', 'assets/preloader.png');
 	create:function(){
 		
 //this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+game.world.setBounds(0,0,2120,1300);
+
 this.scale.minWidth = 1068;
 this.scale.minHeight = 720;
 this.scale.pageAlignHorizontally = true;
