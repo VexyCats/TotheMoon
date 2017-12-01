@@ -1,3 +1,15 @@
+
+/*
+*
+*
+*
+*
+*
+*
+*/
+
+
+
 TheMoon.playing = function(game){};
 
 TheMoon.playing.prototype = {
@@ -14,48 +26,8 @@ preload: function(){
 		//TheMoon.playingConfig(this.game);
 },
 create: function(){
-/*
-*This is the base state that will be active while the player is playing. 
-*
-**************functions****************
-*             drawMap()
-*             drawMenu()
-*
-*
-*
-*
-*
-*
-*
-*
-*
-*
-*
-*
-*/
-	//this object's background = add new sprite to total game(x,y,'name of object that is sprite')
-function drawMap() {
-var tile1, tile2;
-for( y = 0; y <= 1300; y++){
-	for( x = 0; x <= 2100; x++){
-			
-		tile1 = game.rnd.integerInRange(1,3);
-		
-		if(tile1 == 1){
-			game.add.sprite(x,y,'tileHills');
-		}else if(tile1 == 2){
-			game.add.sprite(x,y,'tileWater');
-		}else if(tile1 == 3){
-			game.add.sprite(x,y,'tileGrasslands');
-		}
-x = x +99;
 
-}
-y = y +99;
-}
-
-}
-drawMap();
+this.drawMap();
 this.background = "#00000";
 
 
@@ -67,6 +39,17 @@ city.fixedToCamera = true;
 
 game.global.score = 1;
 
+
+
+
+//add home base to center of map in between four tiles
+// add onlcick to homebase
+this.homeBase = new TheMoon.homeBaseClass();
+this.homeBase.game.add.sprite(game.world.centerX, game.world.centerY, 'homeBase');
+
+this.homeBase.inputEnabled = true;
+  
+ this.homeBase.events.onInputDown.add(this.actionOnClick, this);
 
 },
 
@@ -90,20 +73,44 @@ update: function(){
         {
             game.camera.x += 4;
         }
-
-	function actionOnClick(){
+},
+	actionOnClick: function(sprite, event){
 		game.state.start('market');
 
 	
-}
-// pull players current city data
-// pull current page data  (ie: viewingMarket = true;)
+
+
 },
 render: function(){
 	game.debug.cameraInfo(game.camera, 500,32);
 
 
-}
+},
+ switchAnimal: function(sprite, event) {
+    console.log('move animal');
+  },
+drawMap: function() {
+	var tile1, tile2;
+			for( y = 0; y <= 1300; y++){
+				for( x = 0; x <= 2100; x++){
+						
+					tile1 = game.rnd.integerInRange(1,3);
+					
+							if(tile1 == 1){
+							game.add.sprite(x,y,'tileHills');
+							}else if(tile1 == 2){
+							game.add.sprite(x,y,'tileWater');
+							}else if(tile1 == 3){
+							game.add.sprite(x,y,'tileGrasslands');
+							}
+					x = x +99;
+
+					}
+					y = y +99;
+				}
+
+
+				}
 
 
 };
