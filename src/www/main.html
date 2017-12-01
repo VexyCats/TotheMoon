@@ -5,17 +5,12 @@
 <body id="body">
 
 
-<script type="text/javascript" src="phaser.min.js"></script>
-<script type="text/javascript" src="Boot.js"></script>
-<script type="text/javascript" src="Preloader.js"></script>
-<script type="text/javascript" src="MainMenu.js"></script>
-<script type="text/javascript" src="playingConfig.js"></script>
-<script type="text/javascript" src="playing.js"></script>
-<script type="text/javascript" src="market.js"></script>
-  
+<script type="text/javascript" src="lib/phaser.min.js"></script>
+<script type="text/javascript" src="js/bundle.js"></script>
+
 
   <script type="text/javascript">
-  	
+
 
 	console.log("first thing ever");
 var game = new Phaser.Game(720,500, Phaser.CANVAS);
@@ -39,9 +34,3 @@ game.state.start('Boot');
 
   </script>
 </body>
-
-
-
-
-
-
