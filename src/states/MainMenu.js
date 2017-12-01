@@ -1,9 +1,12 @@
-TheMoon.MainMenu = function(game){};
+var game,
+ MainMenu = function(cgame){
+		this.game = game = cgame;
+};
 
 
 
 
-TheMoon.MainMenu.prototype = {
+MainMenu.prototype = {
 preload: function(){
 
 	//loading images - this = preload function, load = load, image('name of object', 'src')
@@ -49,3 +52,5 @@ function actionOnClickHelp(){
 
 
 }
+
+export default MainMenu;

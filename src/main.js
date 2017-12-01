@@ -1,30 +1,35 @@
+import Boot from './states/Boot';
+import GameState from './states/GameState';
+import MainMenu from './states/MainMenu';
+import Market from './states/Market';
+import Preloader from './states/Preloader';
 
-
-var GameState = {
-
-preload: function(){
-
-	//loading images - this = preload function, load = load, image('name of object', 'src')
-		this.load.image('background', 'assets/russia-city.jpg');
-
-		this.load.image('titleScreen', 'assets/titleScreen.png');
-		this.load.image("button", "assets/button.png");
-
-},
-create: function(){
-
-	//this object's background = add new sprite to total game(x,y,'name of object that is sprite')
-this.background = this.game.add.sprite(0,0, 'background');
-
-
-
-
-},
-update: function(){
-
-}
-
+var TheMoon = {
+	Boot:Boot,
+	Preloader:Preloader,
+	MainMenu:MainMenu,
+	GameState:GameState,
+	Market:Market,
 };
-game.state.add('playing', GameState);
 
-game.state.start('playing');
+
+var game = new Phaser.Game(720,500, Phaser.CANVAS);
+game.global = {
+
+score: 0
+	};
+
+
+game.state.add('Boot', new TheMoon.Boot(game) );
+game.state.add('Preloader', new TheMoon.Preloader(game) );
+game.state.add('MainMenu', new TheMoon.MainMenu(game) );
+game.state.add('GameState', new TheMoon.GameState(game) );
+//game.state.add('playingConfig', TheMoon.playingConfig);
+console.log("first");
+console.log(game);
+game.state.start('Boot');
+
+
+//game.state.add('playing', GameState);
+
+//game.state.start('playing');

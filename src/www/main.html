@@ -13,24 +13,6 @@
 
 
 	console.log("first thing ever");
-var game = new Phaser.Game(720,500, Phaser.CANVAS);
-game.global = {
-
-score: 0
-	};
-
-
-game.state.add('Boot', TheMoon.Boot);
-game.state.add('Preloader', TheMoon.Preloader);
-game.state.add('MainMenu', TheMoon.MainMenu);
-game.state.add('playing', TheMoon.playing);
-//game.state.add('playingConfig', TheMoon.playingConfig);
-console.log("first");
-game.state.start('Boot');
-
-
-
-
 
   </script>
 </body>

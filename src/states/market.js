@@ -1,6 +1,8 @@
-var market = {
+var Market = {
 
 
 
-	
+
 }
+
+export default Market;
