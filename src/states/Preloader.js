@@ -1,4 +1,6 @@
+var TheMoon = TheMoon || {
 
+};
 TheMoon.Preloader = function(game){
 
 	this.preloaderBar = null;
