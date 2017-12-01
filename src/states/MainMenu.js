@@ -7,7 +7,9 @@
 *
 *
 */
+var TheMoon = TheMoon || {
 
+};
 
 
 
