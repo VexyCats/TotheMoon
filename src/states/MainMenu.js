@@ -1,12 +1,22 @@
-var game,
- MainMenu = function(cgame){
-		this.game = game = cgame;
-};
+
+/*
+*
+*
+*
+*
+*
+*
+*/
 
 
 
 
-MainMenu.prototype = {
+TheMoon.MainMenu = function(game){};
+
+
+
+
+TheMoon.MainMenu.prototype = {
 preload: function(){
 
 	//loading images - this = preload function, load = load, image('name of object', 'src')
@@ -47,10 +57,8 @@ function actionOnClick(){
 }
 function actionOnClickHelp(){
 
-	game.state.start('GameState');
+	game.state.start('playing');
 
 
 
 }
-
-export default MainMenu;
