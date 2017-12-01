@@ -1,15 +1,15 @@
-var Preloader = function(cgame){
 
-	this.game = cgame;
+TheMoon.Preloader = function(game){
+
 	this.preloaderBar = null;
 	this.ready = false;
 
 };
 
-Preloader.prototype = {
+TheMoon.Preloader.prototype = {
 	preload:function(){
 
-
+	
 			this.preloadBar = this.add.sprite(this.world.centerX, this.world.centerY, 'preloaderBar');
 
 			this.preloadBar.anchor.setTo(0.5,0.5);
@@ -33,10 +33,16 @@ Preloader.prototype = {
 
 	update: function(){
 		this.ready = true;
-		if(this.ready = true){
+		if(TheMoon.Preloader.ready = true){
 				this.state.start('MainMenu');
 			}
 	}
 };
 
-export default Preloader;
+
+
+
+
+	
+
+
