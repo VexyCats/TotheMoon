@@ -37,6 +37,9 @@ Clone the repo
 Navigate to the folder
 `cd tothemoon`  
 
+Choose your desired branch
+`git checkout [branch]`
+
 To install and run in development mode
 `npm install && npm start`
 
