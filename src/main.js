@@ -20,10 +20,10 @@ score: 0
 	};
 
 
-game.state.add('Boot', new TheMoon.Boot(game) );
-game.state.add('Preloader', new TheMoon.Preloader(game) );
-game.state.add('MainMenu', new TheMoon.MainMenu(game) );
-game.state.add('GameState', new TheMoon.GameState(game) );
+game.state.add('Boot',  TheMoon.Boot(game) );
+game.state.add('Preloader', TheMoon.Preloader(game) );
+game.state.add('MainMenu',  TheMoon.MainMenu(game) );
+game.state.add('GameState',  TheMoon.GameState(game) );
 //game.state.add('playingConfig', TheMoon.playingConfig);
 console.log("first");
 console.log(game);
