@@ -47,7 +47,7 @@ function actionOnClick(){
 }
 function actionOnClickHelp(){
 
-	game.state.start('playing');
+	game.state.start('GameState');
 
 
 
