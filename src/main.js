@@ -2,14 +2,14 @@ import Boot from './states/Boot';
 import MainMenu from './states/MainMenu';
 import Preloader from './states/Preloader';
 import Playing from './states/Playing';
-import Market from './states/Market';
+import stateSave from './states/stateSave';
 
 var TheMoon = {
 	Boot:Boot,
 	Preloader:Preloader,
 	MainMenu:MainMenu,
 	Playing:Playing,
-	Market:Market,
+	stateSave:stateSave,
 };
 
 
