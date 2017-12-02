@@ -24,7 +24,7 @@
 
 											console.log("boot init");
 			this.load.image('preloaderBar', 'assets/preloader.png');
-			game.load.image('homeBase','assets/tileHomeBase.jpg');
+			game.load.image('homebase','assets/tileHomeBase.jpg');
 
 
 				},
