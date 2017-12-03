@@ -14,11 +14,12 @@ Playing.prototype = {
 		preload: function(){
 
 			//loading images - this = preload function, load = load, image('name of object', 'src')
-				
+
 				this.load.image('minimenuBackground', 'assets/minimenu.jpg');
 
 				this.load.image('titleScreen', 'assets/titleScreen.png');
 				this.load.image("button", "assets/button.png")
+				this.load.image("house", "assets/house_top.png")
 				//TheMoon.playingConfig(this.game);
 		},
 		create: function(){
@@ -87,7 +88,7 @@ Playing.prototype = {
 
 
 		},
-		 
+
 		drawMap: function() {
 			var tile1, tile2;
 					for( var y = 0; y <= 1300; y++){
@@ -124,8 +125,20 @@ Playing.prototype = {
 		},
 		showBuildings: function(){
 			this.buildings = this.buildings || {};
-			console.log(Building)
-			this.buildings.one = new Building();
+
+			var config = {
+				house:{
+					x : 200,
+					y : 150,
+					resource: 'Sand',
+					maxStorage: 500,
+					sprite : 'house'
+				}
+			}
+
+			this.buildings.one = new Building(this.game,config.house);
+
+			console.log(this.buildings)
 		}
 
 
