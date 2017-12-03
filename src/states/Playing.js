@@ -128,9 +128,8 @@ Playing.prototype = {
 				house:{
 					x : 200,
 					y : 150,
-					resource: 'Sand',
+					resource: 'sand',
 					maxStorage: 500,
-					sprite : 'house'
 				}
 			}
 
