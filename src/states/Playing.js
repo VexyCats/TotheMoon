@@ -91,16 +91,19 @@ Playing.prototype = {
 							tile1 = game.rnd.integerInRange(1,3);
 
 									if(tile1 == 1){
-									game.add.sprite(x,y,'tileHills');
+									var sprites = game.add.sprite(x,y,'tileHills');
 									}else if(tile1 == 2){
-									game.add.sprite(x,y,'tileWater');
+									var sprites = game.add.sprite(x,y,'tileWater');
 									}else if(tile1 == 3){
-									game.add.sprite(x,y,'tileGrasslands');
+									var sprites = game.add.sprite(x,y,'tileGrasslands');
 									}
-							x = x +99;
+							//x = x +99;
+							sprites.scale.setTo(0.2, 0.2);
+							x = x + 19;
 
 							}
-							y = y +99;
+							//y = y +99;
+							y = y + 19;
 						}
 
 
