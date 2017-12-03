@@ -133,6 +133,7 @@ Playing.prototype = {
 				house:{
 					x : 200,
 					y : 150,
+					level : 2,
 					resource: 'sand',
 					maxStorage: 500,
 				}

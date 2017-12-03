@@ -56,7 +56,7 @@ Building.prototype = {
       sprite:'house'
     }
   },
-  requiredConfig:["x","y","resource","maxStorage"],
+  requiredConfig:["x","y","resource","level","maxStorage"],
   show: function(){
     var buildingProp = this.types[this.state.type];
     var unit =  this.game.add.sprite(this.state.x,this.state.y,buildingProp.sprite);
