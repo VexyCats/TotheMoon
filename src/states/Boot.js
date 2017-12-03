@@ -56,7 +56,8 @@
 			game._cursors = game.input.keyboard.createCursorKeys();//TODO Find a better location to store
 			this.input.maxPointers = 1;
 						this.stage.disableVisibilityChange = true;
-						this.state.start('Preloader');
+						//this.state.start('Preloader');
+						this.state.start('Playing');
 
 				},
 
