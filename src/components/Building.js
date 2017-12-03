@@ -2,15 +2,24 @@ var game,
 Building = function(cgame,config){
   this.game = cgame;
   config = config || {};
+  var errors=[];
+
+  if(typeof cgame == 'undefined'){
+    console.error('Game required');
+    return false;
+  }
 
   for(var i in this.requiredConfig){
     if( typeof config[this.requiredConfig[i]] == 'undefined' || config[this.requiredConfig[i]] == '' )
-      '';
-      //return false;
+      errors.push('Required config: '+ this.requiredConfig[i]);
+  }
+
+  if(errors.length > 0){
+    console.error(errors.join(', ') );
+    return false
   }
 
   this.state = Object.assign({},this.state,config);
-  console.log(this.state)
   this.show();
 }
 
@@ -26,10 +35,9 @@ Building.prototype = {
 
   },
   requiredConfig:["x","y","resource","maxStorage","sprite"],
-  show: function(game){
-    console.log(this.state)
-    var unit =  this.game.sprite.add(this.state.x,this.state.y,this.state.sprite,this.state.frameName);
-    this.phaser = unit;
+  show: function(){
+    var unit =  this.game.add.sprite(this.state.x,this.state.y,this.state.sprite);
+    this.instance = unit;
   },
   hide: function(){
     this.phaser.kill();
