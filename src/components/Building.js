@@ -1,3 +1,5 @@
+import Resource from '../components/Resource';
+
 var game,
 Building = function(cgame,config){
   this.game = cgame;
@@ -20,6 +22,7 @@ Building = function(cgame,config){
   }
 
   this.state = Object.assign({},this.state,config);
+  this.resource = new Resource(cgame,config.resource);
   this.show();
 }
 
@@ -30,9 +33,12 @@ Building.prototype = {
     sprite: '',//Frame to use in building sprites
     frameName: '',
     maxStorage:0,
-    resource:'',
+    resource: {},
     storage:0,
-    mats: [0,0,50]
+    materials: {
+      wood:50,
+      water:0
+    }
 
   },
   requiredConfig:["x","y","resource","maxStorage","sprite"],
@@ -41,8 +47,9 @@ Building.prototype = {
     this.instance = unit;
   },
   hide: function(){
-    this.phaser.kill();
-  }
+    this.instance.kill();
+  },
+
 
 
 }
