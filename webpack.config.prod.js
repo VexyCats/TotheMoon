@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const settings = {
   entry: {
@@ -73,7 +74,11 @@ const settings = {
       title: 'To the moon',
       filename: 'index.html',
       template: 'src/www/main.html'
-    })
+    }),
+    new CopyWebpackPlugin([
+      { from: 'src/lib', to: 'lib' },
+      { from: 'src/assets', to: 'assets' }
+      ])
   ],
 };
 
