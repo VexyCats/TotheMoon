@@ -1,6 +1,6 @@
 
 import Building from '../components/Building';
-import playerData from '../components/playerData';
+import Player from '../components/PlayerData';
 
 var game, cursors;
 
@@ -29,6 +29,9 @@ Playing.prototype = {
 
 		this.drawMap();
 		this.background = "#00000";
+		this.player = new Player(
+			{screenName: 'Demo Player'}
+		)
 
 
 
@@ -116,9 +119,11 @@ Playing.prototype = {
 		homeBaseCreate: function() {
 		var base;
 		base = game.add.sprite(game.world.centerX, game.world.centerY, 'homebase', this);
+		this.player.instance = base;
 
 		base.inputEnabled = true;
 		base.events.onInputDown.add(this.buildingsMenu, this);
+
 
 		},
 		showBuildings: function(){
@@ -147,8 +152,11 @@ Playing.prototype = {
 
 			//var playerInventory = playerData.inventory[0];
 
-			var style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
-			game.add.text(menu.Width/2, menu.Height/2, "test", style);
+			var style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" },
+			position = {x: menu.x,y: menu.y};
+			game.add.text(position.x+20, position.y+25, "test 0000", style);
+			position.y += 25;
+			game.add.text(position.x+20, position.y+40, this.player.screenName, style);
 
 
 		}
