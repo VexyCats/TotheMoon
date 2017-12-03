@@ -21,8 +21,7 @@ Resource = function(cgame,config){
 }
 
 Resource.prototype = {
-    buildConfirmations:{},
-    spawnConfirmations:{}
+    currentTime : 0,
 }
 
 export default Resource;
