@@ -1,7 +1,6 @@
 import Resource from '../components/Resource';
 
-var game,
-Building = function(cgame,config){
+var Building = function(cgame,config){
   this.game = cgame;
   config = config || {};
   var errors=[];
