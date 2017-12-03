@@ -51,3 +51,6 @@ To run dev server
 
 To run production build
 `npm run build`
+
+### Sources / Credits
+[FreePik](https://www.freepik.com/free-vector/isometric-futuristic-house_1086624.htm)
