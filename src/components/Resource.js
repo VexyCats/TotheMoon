@@ -1,6 +1,5 @@
 var game,
-Resource = function(cgame,config){
-  this.game = cgame;
+Resource = function(config){
   config = config || {};
   var errors=[];
 

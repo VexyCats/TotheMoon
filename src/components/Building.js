@@ -27,7 +27,7 @@ var Building = function(cgame,config){
 
   config.type = config.resource;
   this.state = Object.assign({},this.state,config);
-  this.resource = new Resource(cgame,config.resource);
+  this.resource = new Resource(config.resource);
   this.show();
 }
 
