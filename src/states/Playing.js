@@ -1,6 +1,6 @@
 
 import Building from '../components/Building';
-import playerData from '../playerData';
+import playerData from '../components/playerData';
 
 var game, cursors;
 
@@ -31,7 +31,7 @@ Playing.prototype = {
 		this.background = "#00000";
 
 
-		
+
 		console.log(cursors)
 
 
@@ -139,10 +139,10 @@ Playing.prototype = {
 
 		buildingsMenu: function(){
 
-			var menu; 
+			var menu;
 			menu = game.add.sprite(game.camera.world.centerX, game.camera.world.centerY, 'homeBaseMenu', this);
 
-			
+
 			//var playerInventory = playerData.inventory[0];
 
 			var style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
