@@ -89,6 +89,9 @@ Playing.prototype = {
 					for( var y = 0; y <= 1300; y++){
 						for( var x = 0; x <= 2100; x++){
 
+							var sprites = game.add.sprite(x,y,'lunarsoil');
+							/*
+
 							tile1 = game.rnd.integerInRange(1,3);
 
 									if(tile1 == 1){
@@ -97,7 +100,7 @@ Playing.prototype = {
 									var sprites = game.add.sprite(x,y,'tileWater');
 									}else if(tile1 == 3){
 									var sprites = game.add.sprite(x,y,'tileGrasslands');
-									}
+								}*/
 							//x = x +99;
 							sprites.scale.setTo(0.2, 0.2);
 							x = x + 19;
