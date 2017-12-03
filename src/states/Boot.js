@@ -22,10 +22,24 @@
 				preload:function(){
 
 
-											console.log("boot init");
-			this.load.image('preloaderBar', 'assets/preloader.png');
-			game.load.image('homebase','assets/tileHomeBase.jpg');
+/* load fonts */ 
+ //game.load.bitmapFont('xyz', 'assets/fonts/zyx.png', 'assets/fonts/zyx.xml');
 
+											console.log("boot init");
+			game.load.image('preloaderBar', 'assets/preloader.png');
+			game.load.image('homebase','assets/tileHomeBase.jpg');
+			game.load.image('homeBaseMenu', 'assets/homeBaseMenu.png');
+
+				/* Resources */
+
+				game.load.image('sand', 'assets/sand.png');
+				//game.load.image('sand', 'assets/sand.png');
+				//game.load.image('sand', 'assets/sand.png');
+			//	game.load.image('sand', 'assets/sand.png');
+			//	game.load.image('sand', 'assets/sand.png');
+			//	game.load.image('sand', 'assets/sand.png');
+			//	game.load.image('sand', 'assets/sand.png');
+				
 
 				},
 

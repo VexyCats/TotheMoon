@@ -31,7 +31,8 @@ Building.prototype = {
     frameName: '',
     maxStorage:0,
     resource:'',
-    storage:0
+    storage:0,
+    mats: [0,0,50]
 
   },
   requiredConfig:["x","y","resource","maxStorage","sprite"],

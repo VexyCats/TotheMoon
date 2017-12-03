@@ -1,5 +1,6 @@
 
 import Building from '../components/Building';
+import playerData from '../playerData';
 
 var game, cursors;
 
@@ -30,13 +31,7 @@ Playing.prototype = {
 		this.background = "#00000";
 
 
-		var city;
-		city = game.add.button(0, 0, 'button', this.actionOnClick, this);
-		city.scale.setTo(3,0.6);
-
-		city.fixedToCamera = true;
-
-		game.global.score = 1;
+		
 		console.log(cursors)
 
 
@@ -120,7 +115,7 @@ Playing.prototype = {
 		base = game.add.sprite(game.world.centerX, game.world.centerY, 'homebase', this);
 
 		base.inputEnabled = true;
-		base.events.onInputDown.add(this.actionOnClick, this);
+		base.events.onInputDown.add(this.buildingsMenu, this);
 
 		},
 		showBuildings: function(){
@@ -139,6 +134,21 @@ Playing.prototype = {
 			this.buildings.one = new Building(this.game,config.house);
 
 			console.log(this.buildings)
+		},
+
+
+		buildingsMenu: function(){
+
+			var menu; 
+			menu = game.add.sprite(game.camera.world.centerX, game.camera.world.centerY, 'homeBaseMenu', this);
+
+			
+			//var playerInventory = playerData.inventory[0];
+
+			var style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+			game.add.text(menu.Width/2, menu.Height/2, "test", style);
+
+
 		}
 
 
