@@ -1,6 +1,6 @@
 
 
-/* Boot.js 
+/* Boot.js
 * First state to load
 * var TheMoon is the object for the app
 *	loads assets
@@ -22,7 +22,7 @@
 				preload:function(){
 
 
-/* load fonts */ 
+/* load fonts */
  //game.load.bitmapFont('xyz', 'assets/fonts/zyx.png', 'assets/fonts/zyx.xml');
 
 											console.log("boot init");
@@ -33,13 +33,14 @@
 				/* Resources */
 
 				game.load.image('sand', 'assets/sand.png');
+				game.load.image('lunarsoil', 'assets/lunar_soil.jpg');
 				//game.load.image('sand', 'assets/sand.png');
 				//game.load.image('sand', 'assets/sand.png');
 			//	game.load.image('sand', 'assets/sand.png');
 			//	game.load.image('sand', 'assets/sand.png');
 			//	game.load.image('sand', 'assets/sand.png');
 			//	game.load.image('sand', 'assets/sand.png');
-				
+
 
 				},
 
