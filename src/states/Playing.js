@@ -1,4 +1,6 @@
 
+import Building from '../components/Building';
+
 var game, cursors;
 
 var Playing = function(cgame){
@@ -41,13 +43,16 @@ Playing.prototype = {
 
 		//add home base to center of map in between four tiles
 		this.homeBaseCreate();
-		
-		
+
+		//Display buildings
+		this.showBuildings();
+
+
 		},
 
 
-		
-	
+
+
 
 
 
@@ -116,7 +121,13 @@ Playing.prototype = {
 		base.inputEnabled = true;
 		base.events.onInputDown.add(this.actionOnClick, this);
 
+		},
+		showBuildings: function(){
+			this.buildings = this.buildings || {};
+			console.log(Building)
+			this.buildings.one = new Building();
 		}
+
 
 
 	};
