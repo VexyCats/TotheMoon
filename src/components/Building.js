@@ -10,7 +10,7 @@ var Building = function(cgame,config){
     return false;
   }
 
-  if(typeof this.types[config.resource] == 'undefined'){
+  if(typeof this.types[config.resource.resource] == 'undefined'){
     console.error('Building type '+config.type+' does not exist');
     return false;
   }
@@ -25,9 +25,9 @@ var Building = function(cgame,config){
     return false
   }
 
-  config.type = config.resource;
   this.state = Object.assign({},this.state,config);
-  this.resource = new Resource(config.resource);
+  this.state.resource = new Resource(config.resource);
+
   this.show();
 }
 
@@ -35,7 +35,6 @@ Building.prototype = {
   state:{
     x:0,
     y:0,
-    type: '',//Frame to use in building sprites
     level: 1,
     maxStorage:0,
     resource: {},
@@ -58,7 +57,7 @@ Building.prototype = {
   },
   requiredConfig:["x","y","resource","level","maxStorage"],
   show: function(){
-    var buildingProp = this.types[this.state.type];
+    var buildingProp = this.types[this.state.resource.resource];
     var unit =  this.game.add.sprite(this.state.x,this.state.y,buildingProp.sprite);
     if(buildingProp.frameName) unit.frameName = buildingProp.frameName;
     this.instance = unit;

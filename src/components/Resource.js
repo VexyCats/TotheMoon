@@ -12,10 +12,16 @@ Resource = function(config){
     console.error(errors.join(', ') );
     return false
   }
+
+  for (var i in this.members){
+    if(typeof config[this.members[i]] != 'undefined')
+      this[this.members[i]] = config[this.members[i]];
+    }
 }
 
 Resource.prototype = {
     currentTime : 0,
+    members: [ 'currentTime','resource','materials']
 }
 
 export default Resource;

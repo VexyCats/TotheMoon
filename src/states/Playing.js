@@ -134,7 +134,7 @@ Playing.prototype = {
 					x : 200,
 					y : 150,
 					level : 2,
-					resource: 'sand',
+					resource: {resource:'sand'},
 					maxStorage: 500,
 				}
 			}
