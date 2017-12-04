@@ -9,23 +9,25 @@ contract Game {
         _;
     }
     uint256 totalPlayers;
-    struct Planet {
-        bytes32 name;
-        uint iron;
-        uint gold;
-        uint diamonds;
-        uint oil;
-        uint spacegoo;
-    }
-    mapping(address => Planet) public planets;
+   
+    
     struct player{
         uint256 playerID;
-        uint[20] inventory;
-        bool CoolDown;
-        uint lastBlockTime;
-        uint[10] resources;
+        uint[] Buildings;
+        uint level;
     }
     mapping (address => player) public listOfPlayers;
+    mapping(uint => player) public playerLevel;
+    
+    struct Building{
+    harvestTime,
+    level, 
+    x,
+    y}
+    mapping (uint => Building) public buildingLevel;
+   
+    
+    
     
     function Game() {
     
@@ -61,3 +63,8 @@ contract Game {
         planets[msg.sender] = newPlanet;
   }
 }
+
+contract Resources {
+
+}
+
