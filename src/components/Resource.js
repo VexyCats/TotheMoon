@@ -3,11 +3,6 @@ Resource = function(config){
   config = config || {};
   var errors=[];
 
-  if(typeof cgame == 'undefined'){
-    console.error('Game required');
-    return false;
-  }
-
   for(var i in this.requiredConfig){
     if( typeof config[this.requiredConfig[i]] == 'undefined' || config[this.requiredConfig[i]] == '' )
       errors.push('Required config: '+ this.requiredConfig[i]);
