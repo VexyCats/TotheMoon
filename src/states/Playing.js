@@ -1,4 +1,5 @@
 
+import Contract from '../components/ContractApi';
 import Building from '../components/Building';
 import Player from '../components/PlayerData';
 
@@ -33,9 +34,12 @@ Playing.prototype = {
 			{screenName: 'Demo Player'}
 		)
 
+		//Loadup Contract
+		this.contract = new Contract();
 
 
-		console.log(cursors)
+
+		//console.log(cursors)
 
 
 
