@@ -52,7 +52,14 @@ contract Game {
         *   needs to save: map tiles, resource amount, inventory amount, player stats, probably more
         *
         */
-    function save(){
+    function save(uint[] buildingData,){
+    
+    
+    }
+    
+    function setPlayerBuildings(uint[] buildingData) internal {
+    
+    
     
     
     }
