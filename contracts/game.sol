@@ -57,7 +57,7 @@ contract Game {
     
     }
     
-    function setPlayerBuildings(uint[] buildingData) internal {
+    function setPlayerBuildings(uint harvestTime, uint level, uint x, uint y) internal {
     
     
     
