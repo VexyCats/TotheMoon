@@ -10,20 +10,21 @@ contract Game {
     }
     uint256 totalPlayers;
    
-    
-    struct player{
-        uint256 playerID;
-        uint[] Buildings;
-        uint level;
-    }
-    mapping (address => player) public listOfPlayers;
-    mapping(uint => player) public playerLevel;
-    
     struct Building{
     harvestTime,
     level, 
     x,
     y}
+    
+    struct player{
+        uint256 playerID;
+        Building[] playerBuildings;
+        uint level;
+    }
+    mapping (address => player) public listOfPlayers;
+    mapping(uint => player) public playerLevel;
+    
+    
     mapping (uint => Building) public buildingLevel;
    
     
