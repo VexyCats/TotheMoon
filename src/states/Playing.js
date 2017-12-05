@@ -140,8 +140,8 @@ Playing.prototype = {
 		this.player.instance = base;
 
 		base.inputEnabled = true;
-		base.events.onInputDown.add(this.showMenu, this);
-		this.player.instance.events.onInputOut.add(this.hide, this);
+		base.events.onInputOver.add(this.showMenu, this);
+		
 
 		},
 		showMenu: function(){
@@ -199,7 +199,7 @@ Playing.prototype = {
 
 		},
 
-		hide: function(){
+		hideMenu: function(){
 
 			//this.instance.kill();
 
