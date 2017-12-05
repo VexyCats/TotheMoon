@@ -75,7 +75,7 @@ Building.prototype = {
       // set a fill and line style
       box.beginFill(0xFFFFFF,0.7);
       box.lineStyle(2, 0xffd900, 1);
-      box.drawRoundedRect(0, 0, 99, 40, 4);
+      box.drawRoundedRect(0, 0, 125, 40, 4);
       this.infoBox = box;
     }
     else
