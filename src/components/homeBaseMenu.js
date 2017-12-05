@@ -33,7 +33,7 @@ HomeBaseMenu.prototype = {
 			this.menuGroup.add(menu);
 			var style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" },
 			position = {x: menu.x,y: menu.y};
-		
+
 			var menu1 = this.game.add.text(position.x+20, position.y+25, this.player.playerLevel, style);
 			position.y += 25;
 			var menu2 = this.game.add.text(position.x+20, position.y+40, this.player.screenName, style);
@@ -45,10 +45,11 @@ HomeBaseMenu.prototype = {
 			this.menuGroup.add(menu4);
 			console.log(this.menuGroup);
 
-			this.menuGroup.inputEnabled = true;
-			this.menuGroup.events.onInputOut.add(this.hide, this);
-		
-		
+			menu.inputEnabled = true;
+      console.log(this.menuGroup)
+			menu.events.onInputOut.add(this.hide, this);
+
+
     }
 
   }
