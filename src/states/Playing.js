@@ -30,7 +30,6 @@ Playing.prototype = {
 			cursors = this.game._cursors;//TODO store cursors values for use
 
 		this.background = this.drawMap();
-		this.background = "#00000";
 
 		/* create new player account and set resources */
 
@@ -67,26 +66,38 @@ Playing.prototype = {
 
 
 		update: function(){
+			var move = function(playing){
+				var x = (playing.background.width/game.world.width)*6.5,
+				y = (playing.background.height/game.world.height)*4
+				game.camera.atLimit.x?x=0:'';
+				game.camera.atLimit.y?y=0:'';
+				return{x:x,y:y};
+			}
+
+
 			 if (cursors.up.isDown)
 		        {
-		            game.camera.y -= 4;
+							game.camera.y -= 4;
+							this.background.y -= move(this).y
 		        }
 		        else if (cursors.down.isDown)
 		        {
 		            game.camera.y += 4;
+								this.background.y += move(this).y
 		        }
 
 		        if (cursors.left.isDown)
 		        {
 		            game.camera.x -= 4;
+								this.background.x -= move(this).x
 		        }
 		        else if (cursors.right.isDown)
 		        {
 		            game.camera.x += 4;
+								this.background.x += move(this).x
 		        }
 
-				//console.log(this.background)
-				//this.background.tilePosition.x = 0.5;
+			//this.background.tilePosition.x = 0.5;//Rolling background
 
 		},
 			actionOnClick: function(){
@@ -103,7 +114,9 @@ Playing.prototype = {
 		},
 
 		drawMap: function() {
+
 			var background = game.add.tileSprite(0, 0, 1024, 1024, "lunarsoil");//TODO use only one image to avoid memory loss
+			//background.fixedToCamera = true;
 			return background;
 			/*
 			var tile1, tile2;
