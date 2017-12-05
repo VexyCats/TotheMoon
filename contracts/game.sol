@@ -10,20 +10,21 @@ contract Game {
     }
     uint256 totalPlayers;
    
-    
-    struct player{
-        uint256 playerID;
-        uint[] Buildings;
-        uint level;
-    }
-    mapping (address => player) public listOfPlayers;
-    mapping(uint => player) public playerLevel;
-    
     struct Building{
     harvestTime,
     level, 
     x,
     y}
+    
+    struct player{
+        uint256 playerID;
+        Building[] playerBuildings;
+        uint level;
+    }
+    mapping (address => player) public listOfPlayers;
+    mapping(uint => player) public playerLevel;
+    
+    
     mapping (uint => Building) public buildingLevel;
    
     
@@ -51,17 +52,19 @@ contract Game {
         *   needs to save: map tiles, resource amount, inventory amount, player stats, probably more
         *
         */
-    function save(){
+    function save(uint buildingData,) payable{
     
     
     }
     
-    function spawn(bytes32 planetName) payable {
-        Planet newPlanet;
-        newPlanet.name = planetName;
-        
-        planets[msg.sender] = newPlanet;
-  }
+    function setPlayerBuildings(uint harvestTime, uint level, uint x, uint y) internal {
+    
+    
+    
+    
+    }
+    
+
 }
 
 contract Resources {
