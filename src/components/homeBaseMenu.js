@@ -25,6 +25,7 @@ HomeBaseMenu.prototype = {
       this.menuGroup.kill();
     },
     buildingsMenu: function(){
+    	if(this.menuGroup )this.menuGroup.revive();
 			this.menuGroup = this.menuGroup || this.game.add.group();
 
 			var menu;
@@ -32,7 +33,7 @@ HomeBaseMenu.prototype = {
 			this.menuGroup.add(menu);
 			var style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" },
 			position = {x: menu.x,y: menu.y};
-
+		
 			var menu1 = this.game.add.text(position.x+20, position.y+25, this.player.playerLevel, style);
 			position.y += 25;
 			var menu2 = this.game.add.text(position.x+20, position.y+40, this.player.screenName, style);
@@ -41,11 +42,13 @@ HomeBaseMenu.prototype = {
 			this.menuGroup.add(menu1);
 			this.menuGroup.add(menu2);
 			this.menuGroup.add(menu3);
+			this.menuGroup.add(menu4);
 			console.log(this.menuGroup);
-			//this.instance = menu;
 
-
-		this.menuGroup.inputEnabled = true;
+			this.menuGroup.inputEnabled = true;
+			this.menuGroup.events.onInputOut.add(this.hide, this);
+		
+		
     }
 
   }
