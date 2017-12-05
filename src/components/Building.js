@@ -92,7 +92,7 @@ Building.prototype = {
       this.infoText.add(label);
     }
     else
-      this.infoText.resetAll();
+      this.infoText.revive();
 
     console.log(this.infoGroup,this.infoText)
   },
