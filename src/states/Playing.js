@@ -28,10 +28,10 @@ Playing.prototype = {
 
 			cursors = this.game._cursors;//TODO store cursors values for use
 
-		this.drawMap();
+		this.background = this.drawMap();
 		this.background = "#00000";
 
-		/* create new player account and set resources */ 
+		/* create new player account and set resources */
 
 		this.player = new Player(
 			{screenName: 'Demo Player'}
@@ -80,9 +80,12 @@ Playing.prototype = {
 		        {
 		            game.camera.x += 4;
 		        }
+						console.log(this.background)
+				this.background.tilePosition.x = 0.5;
+
 		},
 			actionOnClick: function(){
-				
+
 
 
 
@@ -95,6 +98,9 @@ Playing.prototype = {
 		},
 
 		drawMap: function() {
+			var background = game.add.tileSprite(0, 0, 1024, 1024, "lunarsoil");//TODO use only one image to avoid memory loss
+			return background;
+			/*
 			var tile1, tile2;
 					for( var y = 0; y <= 1300; y++){
 						for( var x = 0; x <= 2100; x++){
@@ -110,15 +116,15 @@ Playing.prototype = {
 									var sprites = game.add.sprite(x,y,'tileWater');
 									}else if(tile1 == 3){
 									var sprites = game.add.sprite(x,y,'tileGrasslands');
-								}*/
+								}
 							x = x +99;
-							
+
 						//	x = x + 19;
 
 							}
 							y = y +99;
 							//y = y + 19;
-						}
+						}*/
 
 
 						},
@@ -158,32 +164,32 @@ Playing.prototype = {
 			menu = game.add.sprite(game.camera.world.centerX, game.camera.world.centerY, 'homeBaseMenu', this);
 			var style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" },
 			position = {x: menu.x,y: menu.y};
-			
+
 			menu.game.add.text(position.x+20, position.y+25, this.player.playerLevel, style);
 			position.y += 25;
 			menu.game.add.text(position.x+20, position.y+40, this.player.screenName, style);
 			menu.game.add.text(position.x+20, position.y+100, "Current Buildings", style);
 			menu.game.add.text(position.x+150, position.y+150, this.player.buildings[0], style);
 
-		
+
 			this.instance = menu;
 
 
 		this.instance.inputEnabled = true;
-		
+
 		this.instance.events.onInputOut.add(this.hide, this);
 
 			//var playerInventory = playerData.inventory[0];
 
-			
-			
+
+
 
 
 
 		},
 
 		hide: function(){
-			
+
 			this.instance.kill();
 		},
 
