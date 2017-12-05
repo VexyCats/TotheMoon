@@ -2,6 +2,7 @@
 import Contract from '../components/ContractApi';
 import Building from '../components/Building';
 import Player from '../components/PlayerData';
+import homeBaseMenu from '../components/homeBaseMenu';
 
 var game, cursors;
 
@@ -135,9 +136,14 @@ Playing.prototype = {
 		this.player.instance = base;
 
 		base.inputEnabled = true;
-		base.events.onInputDown.add(this.buildingsMenu, this);
+		base.events.onInputDown.add(this.showMenu, this);
 		this.player.instance.events.onInputOut.add(this.hide, this);
 
+		},
+		showMenu: function(){
+
+
+			homeBaseMenu.show();
 		},
 		showBuildings: function(){
 			this.buildings = this.buildings || {};
@@ -179,6 +185,7 @@ Playing.prototype = {
 
 		this.instance.events.onInputOut.add(this.hide, this);
 
+
 			//var playerInventory = playerData.inventory[0];
 
 
@@ -191,6 +198,8 @@ Playing.prototype = {
 		hide: function(){
 
 			this.instance.kill();
+
+			this.menuGroup.kill();
 		},
 
 

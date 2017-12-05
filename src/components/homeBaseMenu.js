@@ -1,30 +1,28 @@
 import{HomeBaseMenuSprite} from '../config/homeBaseMenu';
-
 var HomeBaseMenu = function(cgame,config){
   this.game = cgame;
   config = config || {};
   var errors=[];
+
+
+
 }
 
 HomeBaseMenu.prototype = {
   state:{
-  	sprite:'HomeBaseMenu',
-    x: 'game.camera.world.centerX',
-    y: 'game.camera.world.centerY'
+    	sprite:'HomeBaseMenu',
+      //x: this.game.camera.world.centerX,
+      //y: this.game.camera.world.centerY
 
     },
 
     show: function(){
-
     	buildingsMenu();
-
     },
 
     hide: function(){
       this.menuGroup.kill();
     },
-
-
     buildingsMenu: function(){
 			this.menuGroup = this.menuGroup || this.game.add.group();
 
@@ -49,6 +47,6 @@ HomeBaseMenu.prototype = {
 		this.menuGroup.inputEnabled = true;
     }
 
-}
+  }
 
-export default HomeBaseMenu;
+  export default HomeBaseMenu;
