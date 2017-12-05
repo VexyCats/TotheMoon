@@ -52,7 +52,7 @@ contract Game {
         *   needs to save: map tiles, resource amount, inventory amount, player stats, probably more
         *
         */
-    function save(uint[] buildingData,){
+    function save(uint buildingData,) payable{
     
     
     }
@@ -64,12 +64,7 @@ contract Game {
     
     }
     
-    function spawn(bytes32 planetName) payable {
-        Planet newPlanet;
-        newPlanet.name = planetName;
-        
-        planets[msg.sender] = newPlanet;
-  }
+
 }
 
 contract Resources {
