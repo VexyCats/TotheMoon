@@ -12,8 +12,8 @@ Player.prototype = {
     screenName: 'Player',
     playerLevel: 1,
     lastResourceGathering: 0,
-    buildings : [],
-    inventoryItems: [0,0,0,50,0,0,0]
+    buildings : [1,0,0],
+    resourcesItems: [0,0,0,50,0,0,0]
 
 }
 

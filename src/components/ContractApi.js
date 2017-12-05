@@ -1,6 +1,6 @@
-import 'web3/index';
-import Abi from '../config/abi';
-import Address from '../config/contract';
+//import 'web3/index';
+//import Abi from '../config/abi';
+//import Address from '../config/contract';
 
 var Contract = function(){
   window? '' : window = {};

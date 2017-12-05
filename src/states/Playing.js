@@ -30,12 +30,15 @@ Playing.prototype = {
 
 		this.drawMap();
 		this.background = "#00000";
+
+		/* create new player account and set resources */ 
+
 		this.player = new Player(
 			{screenName: 'Demo Player'}
 		)
 
 		//Loadup Contract
-		this.contract = new Contract();
+		//this.contract = new Contract();
 
 
 
@@ -78,8 +81,8 @@ Playing.prototype = {
 		            game.camera.x += 4;
 		        }
 		},
-			actionOnClick: function(sprite, event){
-				game.state.start('homeBaseMenu');
+			actionOnClick: function(){
+				
 
 
 
@@ -108,13 +111,13 @@ Playing.prototype = {
 									}else if(tile1 == 3){
 									var sprites = game.add.sprite(x,y,'tileGrasslands');
 								}*/
-							//x = x +99;
-							sprites.scale.setTo(0.2, 0.2);
-							x = x + 19;
+							x = x +99;
+							
+						//	x = x + 19;
 
 							}
-							//y = y +99;
-							y = y + 19;
+							y = y +99;
+							//y = y + 19;
 						}
 
 
@@ -127,7 +130,7 @@ Playing.prototype = {
 
 		base.inputEnabled = true;
 		base.events.onInputDown.add(this.buildingsMenu, this);
-
+		this.player.instance.events.onInputOut.add(this.hide, this);
 
 		},
 		showBuildings: function(){
@@ -151,17 +154,46 @@ Playing.prototype = {
 
 		buildingsMenu: function(){
 
-			var menu;
+			var menu = {};
 			menu = game.add.sprite(game.camera.world.centerX, game.camera.world.centerY, 'homeBaseMenu', this);
+			var style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" },
+			position = {x: menu.x,y: menu.y};
+			
+			menu.game.add.text(position.x+20, position.y+25, this.player.playerLevel, style);
+			position.y += 25;
+			menu.game.add.text(position.x+20, position.y+40, this.player.screenName, style);
+			menu.game.add.text(position.x+20, position.y+100, "Current Buildings", style);
+			menu.game.add.text(position.x+150, position.y+150, this.player.buildings[0], style);
 
+		
+			this.instance = menu;
+
+
+		this.instance.inputEnabled = true;
+		
+		this.instance.events.onInputOut.add(this.hide, this);
 
 			//var playerInventory = playerData.inventory[0];
 
-			var style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" },
-			position = {x: menu.x,y: menu.y};
-			game.add.text(position.x+20, position.y+25, "test 0000", style);
-			position.y += 25;
-			game.add.text(position.x+20, position.y+40, this.player.screenName, style);
+			
+			
+
+
+
+		},
+
+		hide: function(){
+			
+			this.instance.kill();
+		},
+
+
+
+		placeBuilding: function(){
+
+
+
+
 
 
 		}
