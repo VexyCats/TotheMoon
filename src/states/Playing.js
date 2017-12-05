@@ -2,9 +2,9 @@
 import Contract from '../components/ContractApi';
 import Building from '../components/Building';
 import Player from '../components/PlayerData';
-import homeBaseMenu from '../components/homeBaseMenu';
+import HomeBaseMenu from '../components/homeBaseMenu';
 
-var game, cursors;
+var game, cursors,homeBaseMenu;
 
 var Playing = function(cgame){
 	this.game = game = cgame;
@@ -36,7 +36,10 @@ Playing.prototype = {
 
 		this.player = new Player(
 			{screenName: 'Demo Player'}
-		)
+		);
+
+		homeBaseMenu = new HomeBaseMenu(this.game,this.player);
+
 
 		//Loadup Contract
 		//this.contract = new Contract();
@@ -81,7 +84,8 @@ Playing.prototype = {
 		        {
 		            game.camera.x += 4;
 		        }
-						//console.log(this.background)
+
+				//console.log(this.background)
 				//this.background.tilePosition.x = 0.5;
 
 		},
@@ -197,9 +201,9 @@ Playing.prototype = {
 
 		hide: function(){
 
-			this.instance.kill();
+			//this.instance.kill();
 
-			this.menuGroup.kill();
+			homeBaseMenu.hide();
 		},
 
 
