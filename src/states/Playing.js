@@ -81,7 +81,7 @@ Playing.prototype = {
 		        {
 		            game.camera.x += 4;
 		        }
-						console.log(this.background)
+						//console.log(this.background)
 				//this.background.tilePosition.x = 0.5;
 
 		},
