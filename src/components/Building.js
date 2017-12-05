@@ -1,4 +1,5 @@
-import Resource from '../components/Resource';
+import Resource from './Resource';
+import{BuldingTypes,BuildingFonts} from '../config/building';
 
 var Building = function(cgame,config){
   this.game = cgame;
@@ -10,7 +11,7 @@ var Building = function(cgame,config){
     return false;
   }
 
-  if(typeof this.types[config.resource.resource] == 'undefined'){
+  if(typeof BuldingTypes[config.resource.resource] == 'undefined'){
     console.error('Building type '+config.type+' does not exist');
     return false;
   }
@@ -45,28 +46,59 @@ Building.prototype = {
     }
 
   },
-  types:{
-    wood:{
-      sprite:'house'
-    },
-    soil:{},
-    water:{},
-    sand:{
-      sprite:'house'
-    }
-  },
   requiredConfig:["x","y","resource","level","maxStorage"],
   show: function(){
-    var buildingProp = this.types[this.state.resource.resource];
+    var buildingProp = BuldingTypes[this.state.resource.resource];
     var unit =  this.game.add.sprite(this.state.x,this.state.y,buildingProp.sprite);
     if(buildingProp.frameName) unit.frameName = buildingProp.frameName;
     this.instance = unit;
+
+    this.instance.inputEnabled = true;
+    //this.instance.events.onInputOver.add(this.displayInfo, this);
+    this.instance.events.onInputOver.add(this.displayInfo, this);
+		this.instance.events.onInputOut.add(this.hideInfo, this);
   },
   hide: function(){
     this.instance.kill();
   },
+  update: function(){
+    console.log (true)
+  },
+  displayInfo: function(a,b,c,d,e){
+    this.infoGroup = this.infoGroup || this.game.add.group();
 
+    if(!this.infoBox){
+      this.infoGroup.x = this.state.x,
+      this.infoGroup.y = this.state.y-25;
+      var box = this.game.add.graphics(0,0);
+      this.infoGroup.add(box);
+      // set a fill and line style
+      box.beginFill(0xFFFFFF,0.7);
+      box.lineStyle(2, 0xffd900, 1);
+      box.drawRoundedRect(0, 0, 99, 40, 4);
+      this.infoBox = box;
+    }
+    else
+      this.infoBox.revive();
 
+    if(!this.infoText){
+      this.infoText = this.game.add.group();
+      this.infoGroup.add(this.infoText);
+
+      var title = this.game.add.text(20,1,this.state.resource.resource,BuildingFonts.infoBox.title);
+      this.infoText.add(title);
+      var top = this.infoText.y+this.infoText.height;
+      var label = this.game.add.text(1,top - 3,'Storage: ',BuildingFonts.infoBox.label);
+      this.infoText.add(label);
+    }
+    else
+      this.infoText.resetAll();
+
+    console.log(this.infoGroup,this.infoText)
+  },
+  hideInfo: function(){
+    this.infoGroup.killAll();
+  }
 
 }
 
