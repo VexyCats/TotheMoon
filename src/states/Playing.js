@@ -2,6 +2,7 @@
 import Contract from '../components/ContractApi';
 import Building from '../components/Building';
 import Player from '../components/PlayerData';
+import homeBaseMenu from '../components/homeBaseMenu';
 
 var game, cursors;
 
@@ -129,10 +130,15 @@ Playing.prototype = {
 		this.player.instance = base;
 
 		base.inputEnabled = true;
-		base.events.onInputDown.add(this.buildingsMenu, this);
+		base.events.onInputDown.add(this.showMenu, this);
 		this.player.instance.events.onInputOut.add(this.hide, this);
 
 		},
+		showMenu: function(){
+
+
+			homeBaseMenu.show();
+		}
 		showBuildings: function(){
 			this.buildings = this.buildings || {};
 
@@ -152,27 +158,7 @@ Playing.prototype = {
 		},
 
 
-		buildingsMenu: function(){
-
-			var menu = {};
-			menu = game.add.sprite(game.camera.world.centerX, game.camera.world.centerY, 'homeBaseMenu', this);
-			var style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" },
-			position = {x: menu.x,y: menu.y};
-			
-			menu.game.add.text(position.x+20, position.y+25, this.player.playerLevel, style);
-			position.y += 25;
-			menu.game.add.text(position.x+20, position.y+40, this.player.screenName, style);
-			menu.game.add.text(position.x+20, position.y+100, "Current Buildings", style);
-			menu.game.add.text(position.x+150, position.y+150, this.player.buildings[0], style);
-
 		
-			this.instance = menu;
-
-
-		this.instance.inputEnabled = true;
-		
-		this.instance.events.onInputOut.add(this.hide, this);
-
 			//var playerInventory = playerData.inventory[0];
 
 			
@@ -184,7 +170,7 @@ Playing.prototype = {
 
 		hide: function(){
 			
-			this.instance.kill();
+			this.menuGroup.kill();
 		},
 
 
