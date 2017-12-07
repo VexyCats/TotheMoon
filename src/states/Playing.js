@@ -1,6 +1,7 @@
 
 import Contract from '../components/ContractApi';
-import Alert from '../util/alert';
+import Alert from '../util/Alert';
+import HUD from '../util/Hud';
 import Building from '../components/Building';
 import Player from '../components/PlayerData';
 import HomeBaseMenu from '../components/homeBaseMenu';
@@ -10,6 +11,7 @@ var game, cursors,homeBaseMenu;
 var Playing = function(cgame){
 	this.game = game = cgame;
 	this.alert = new Alert(cgame);
+	this.hud = new HUD(cgame);
 }
 
 
@@ -59,7 +61,10 @@ Playing.prototype = {
 		this.showBuildings();
 
 		//Test alert
-		this.alert.show('success','Message','Title',4);
+		//this.alert.show('success','Message','Title',4);
+
+		//Show HUD
+		this.hud.show();
 
 
 
