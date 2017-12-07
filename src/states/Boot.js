@@ -41,6 +41,8 @@
 			//	game.load.image('sand', 'assets/sand.png');
 			//	game.load.image('sand', 'assets/sand.png');
 
+			//game.load.spr('close_icon', 'assets/close_icon.png');
+			game.load.spritesheet('close_icons', 'assets/close_icons.png', 93, 124);
 
 				},
 
