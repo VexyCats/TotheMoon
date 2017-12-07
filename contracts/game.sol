@@ -65,7 +65,7 @@ contract Game {
     
     function setPlayerBuildings(uint harvestTime, uint level, uint x, uint y) internal {
     
-    
+    //update( buildings [ msg.sender ] [ index ] )
     
     
     }
