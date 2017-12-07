@@ -94,7 +94,6 @@ Building.prototype = {
     else
       this.infoText.revive();
 
-    console.log(this.infoGroup,this.infoText)
   },
   hideInfo: function(){
     this.infoGroup.killAll();
