@@ -20,6 +20,7 @@ contract Game {
         uint256 playerID;
         Building[] playerBuildings;
         uint level;
+        
     }
     mapping (address => player) public listOfPlayers;
     mapping(uint => player) public playerLevel;
@@ -39,12 +40,14 @@ contract Game {
     *   gives starter amount
     *
     */
-      function createAccount(){
+      function createAccount() return (uint _playerID){
      
-    
+     
      listOfPlayers[msg.sender].playerID = totalPlayers++;
      
-     listOfPlayers[msg.sender].goldAmount  = 10;
+     listOfPlayers[msg.sender].resources[0]  = 10;
+     
+     
         }
         
         /* Needs to save the player data
@@ -66,8 +69,35 @@ contract Game {
     
 
 }
+contract ERC20 {
+    
+     function balanceOf(address _owner) constant returns (uint balance);
+     function transfer(address _to, uint _value) returns (bool success);
+     function transferFrom(address _from, address _to, uint _value) returns (bool success);
+     function approve(address _spender, uint _value) returns (bool success);
+     function allowance(address _owner, address _spender) constant returns (uint remaining);
+     event Transfer(address indexed _from, address indexed _to, uint _value);
+     event Approval(address indexed _owner, address indexed _spender, uint _value);
+ }
 
-contract Resources {
+contract Resources is ERC20 {
 
+
+    struct resourceList {
+        uint wood;
+        uint metal;
+        uint soil;
+        uint water;
+    
+    }
+    
+    mapping (address => resourceList) public resourceBalances
+    
+    
+    
+    function balanceOf(address _owner) constant returns (uint256 balance) {
+         return balances[_owner];
+     }
+  
 }
 
