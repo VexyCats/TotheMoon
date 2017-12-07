@@ -17,7 +17,9 @@ Alert.prototype ={
     version *= 2;
     var frame = type == 'success' || type == 'info'? version - 2:version - 1;
 
-    var close = game.add.sprite(0,0,'close_icons',frame);
+    var close = game.add.sprite(100,100,'close_icons',frame);
+    close.anchor.x = 0.5,
+    close.anchor.y = 0.5;
     close.inputEnabled = true;
     close.input.useHandCursor = true;
     close.scale.x = 0.4,
