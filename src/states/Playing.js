@@ -1,5 +1,6 @@
 
 import Contract from '../components/ContractApi';
+import Alert from '../util/alert';
 import Building from '../components/Building';
 import Player from '../components/PlayerData';
 import HomeBaseMenu from '../components/homeBaseMenu';
@@ -8,6 +9,7 @@ var game, cursors,homeBaseMenu;
 
 var Playing = function(cgame){
 	this.game = game = cgame;
+	this.alert = new Alert(cgame);
 }
 
 
@@ -41,7 +43,7 @@ Playing.prototype = {
 
 
 		//Loadup Contract
-		//this.contract = new Contract();
+		this.contract = new Contract();
 
 
 
@@ -55,6 +57,10 @@ Playing.prototype = {
 
 		//Display buildings
 		this.showBuildings();
+
+		//Test alert
+		this.alert.show('success','Message','Title',4);
+
 
 
 		},
@@ -154,7 +160,7 @@ Playing.prototype = {
 
 		base.inputEnabled = true;
 		base.events.onInputOver.add(this.showMenu, this);
-		
+
 
 		},
 		showMenu: function(){
