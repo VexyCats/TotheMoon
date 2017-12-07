@@ -15,7 +15,7 @@ contract Game {
     level, 
     x,
     y}
-    
+    mapping (address =>  mapping( uint => Building) ) public buildings;
     struct player{
         uint256 playerID;
         Building[] playerBuildings;
@@ -26,7 +26,7 @@ contract Game {
     mapping(uint => player) public playerLevel;
     
     
-    mapping (uint => Building) public buildingLevel;
+    mapping (address => Building) public buildings;
    
     
     
@@ -40,7 +40,7 @@ contract Game {
     *   gives starter amount
     *
     */
-      function createAccount() return (uint _playerID){
+      function createAccount(string _screenName) return (uint _playerID){
      
      
      listOfPlayers[msg.sender].playerID = totalPlayers++;
@@ -55,7 +55,10 @@ contract Game {
         *   needs to save: map tiles, resource amount, inventory amount, player stats, probably more
         *
         */
-    function save(uint buildingData,) payable{
+    function save(uint[3][] buildingData, uint[5] upgradeData){
+    
+    
+    
     
     
     }
