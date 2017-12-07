@@ -43,10 +43,8 @@ HomeBaseMenu.prototype = {
 			this.menuGroup.add(menu2);
 			this.menuGroup.add(menu3);
 			this.menuGroup.add(menu4);
-			console.log(this.menuGroup);
 
 			menu.inputEnabled = true;
-      console.log(this.menuGroup)
 			menu.events.onInputOut.add(this.hide, this);
 
 
