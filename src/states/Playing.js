@@ -41,21 +41,18 @@ Playing.prototype = {
 			{screenName: 'Demo Player'}
 		);
 
-		homeBaseMenu = new HomeBaseMenu(this.game,this.player);
 
 
 		//Loadup Contract
 		this.contract = new Contract();
 
-
-
 		//console.log(cursors)
-
 
 
 
 		//add home base to center of map in between four tiles
 		this.homeBaseCreate();
+		homeBaseMenu = new HomeBaseMenu(this.game,this.player);
 
 		//Display buildings
 		this.showBuildings();

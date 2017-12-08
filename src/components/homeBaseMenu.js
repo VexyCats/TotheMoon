@@ -4,7 +4,8 @@ var HomeBaseMenu = function(cgame, player,config){
   this.player = player;
   config = config || {};
   var errors=[];
-
+  this.show();//Set the position in the world relative to other components
+  this.hide();
 
 
 }
