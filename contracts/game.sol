@@ -1,4 +1,4 @@
-pragma solidity ^0.4.11;
+pragma solidity ^0.4.3;
 
 contract Game {
     
@@ -10,13 +10,18 @@ contract Game {
     }
     uint256 totalPlayers;
    
-    struct Building{
-    harvestTime,
-    level, 
-    x,
-    y}
-    mapping (address =>  mapping( uint => Building) ) public buildings;
+    struct Building {
+    uint id;
+    uint harvestTime;
+    
+    uint level;
+    uint x;
+    uint y;
+        
+    }
+    mapping (address =>  Building ) public buildings;
     struct player{
+        uint numberOfBuildings;
         uint256 playerID;
         Building[] playerBuildings;
         uint level;
@@ -26,7 +31,7 @@ contract Game {
     mapping(uint => player) public playerLevel;
     
     
-    mapping (address => Building) public buildings;
+   
    
     
     
@@ -40,12 +45,15 @@ contract Game {
     *   gives starter amount
     *
     */
-      function createAccount(string _screenName) return (uint _playerID){
+ function createAccount(string _screenName) returns (uint _playerID){
      
      
      listOfPlayers[msg.sender].playerID = totalPlayers++;
-     
-     listOfPlayers[msg.sender].resources[0]  = 10;
+   
+     listOfPlayers[msg.sender].playerBuildings[0].harvestTime = 0;
+     listOfPlayers[msg.sender].playerBuildings[0].x = 0;
+     listOfPlayers[msg.sender].playerBuildings[0].y = 0;
+     listOfPlayers[msg.sender].playerBuildings[0].level = 0;
      
      
         }
@@ -55,7 +63,47 @@ contract Game {
         *   needs to save: map tiles, resource amount, inventory amount, player stats, probably more
         *
         */
-    function save(uint[3][] buildingData, uint[5] upgradeData){
+    function save(uint[5][2] memory buildingData, uint[5] upgradeData){
+     uint x;
+     uint  y;
+     uint id;
+     if(buildingData[0][0] > 0){
+         id = 1;
+         buildingData[0][0] =  x;
+         buildingData[0][1] = y;
+         listOfPlayers[msg.sender].playerBuildings[listOfPlayers[msg.sender].numberOfBuildings].id =  id;
+        
+        listOfPlayers[msg.sender].playerBuildings[listOfPlayers[msg.sender].numberOfBuildings].y = y ; 
+        listOfPlayers[msg.sender].playerBuildings[listOfPlayers[msg.sender].numberOfBuildings].x = x ;
+      listOfPlayers[msg.sender].numberOfBuildings++;
+     }
+     if(buildingData[1][0] > 0){
+        id = 2;
+         buildingData[1][0] =  x;
+         buildingData[1][1] = y;
+         listOfPlayers[msg.sender].playerBuildings[listOfPlayers[msg.sender].numberOfBuildings].id =  id;
+        
+        listOfPlayers[msg.sender].playerBuildings[listOfPlayers[msg.sender].numberOfBuildings].y = y ; 
+        listOfPlayers[msg.sender].playerBuildings[listOfPlayers[msg.sender].numberOfBuildings].x = x ;
+      listOfPlayers[msg.sender].numberOfBuildings++;
+     }
+     if(buildingData[2][0] > 0){
+         id = 3;
+         
+         buildingData[2][0] =  x;
+         buildingData[2][1] = y;
+          listOfPlayers[msg.sender].playerBuildings[listOfPlayers[msg.sender].numberOfBuildings].id =  id;
+        
+        listOfPlayers[msg.sender].playerBuildings[listOfPlayers[msg.sender].numberOfBuildings].y = y ; 
+        listOfPlayers[msg.sender].playerBuildings[listOfPlayers[msg.sender].numberOfBuildings].x = x ;
+      listOfPlayers[msg.sender].numberOfBuildings++;
+     }
+     if(buildingData[3][0] > 0){
+         id = 4;
+     }
+     if(buildingData[4][2] > 0){}
+     if(buildingData[5][0] > 0){}
+ 
     
     
     
@@ -74,13 +122,7 @@ contract Game {
 }
 contract ERC20 {
     
-     function balanceOf(address _owner) constant returns (uint balance);
-     function transfer(address _to, uint _value) returns (bool success);
-     function transferFrom(address _from, address _to, uint _value) returns (bool success);
-     function approve(address _spender, uint _value) returns (bool success);
-     function allowance(address _owner, address _spender) constant returns (uint remaining);
-     event Transfer(address indexed _from, address indexed _to, uint _value);
-     event Approval(address indexed _owner, address indexed _spender, uint _value);
+    
  }
 
 contract Resources is ERC20 {
@@ -94,12 +136,12 @@ contract Resources is ERC20 {
     
     }
     
-    mapping (address => resourceList) public resourceBalances
+    mapping (address => resourceList) public resourceBalances;
     
     
     
     function balanceOf(address _owner) constant returns (uint256 balance) {
-         return balances[_owner];
+        // return balances[_owner];
      }
   
 }
