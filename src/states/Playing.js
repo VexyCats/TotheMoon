@@ -74,13 +74,18 @@ Playing.prototype = {
 
 
 		update: function(){
+			var extreme = {
+				x: ( cursors.left.isDown && game.camera.atLimit.x) || ( cursors.right.isDown && game.camera.atLimit.x ),
+				y: ( cursors.up.isDown && game.camera.atLimit.y) || ( cursors.down.isDown && game.camera.atLimit.y )
+			}
 			var move = function(playing){
 				var x = (playing.background.width/game.world.width)*6.5,
 				y = (playing.background.height/game.world.height)*4
-				game.camera.atLimit.x?x=0:'';
-				game.camera.atLimit.y?y=0:'';
+				extreme.x ?x=0:'';
+				extreme.y?y=0:'';
 				return{x:x,y:y};
 			}
+
 
 
 			 if (cursors.up.isDown)
