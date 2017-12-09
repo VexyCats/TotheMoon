@@ -45,11 +45,10 @@ contract Game {
     *   gives starter amount
     *
     */
- function createAccount(string _screenName) returns (uint _playerID){
+ function createAccount(string _screenName) payable returns (uint _playerID)  { 
      
      
      listOfPlayers[msg.sender].playerID = totalPlayers++;
-   
      listOfPlayers[msg.sender].playerBuildings[0].harvestTime = 0;
      listOfPlayers[msg.sender].playerBuildings[0].x = 0;
      listOfPlayers[msg.sender].playerBuildings[0].y = 0;
@@ -63,46 +62,43 @@ contract Game {
         *   needs to save: map tiles, resource amount, inventory amount, player stats, probably more
         *
         */
-    function save(uint[5][2] memory buildingData, uint[5] upgradeData){
-     uint x;
-     uint  y;
-     uint id;
+    function save(uint[2][5] buildingData, uint[5] upgradeData){
+    uint x;
+    uint  y; 
+   
      if(buildingData[0][0] > 0){
-         id = 1;
+         
          buildingData[0][0] =  x;
          buildingData[0][1] = y;
-         listOfPlayers[msg.sender].playerBuildings[listOfPlayers[msg.sender].numberOfBuildings].id =  id;
-        
-        listOfPlayers[msg.sender].playerBuildings[listOfPlayers[msg.sender].numberOfBuildings].y = y ; 
-        listOfPlayers[msg.sender].playerBuildings[listOfPlayers[msg.sender].numberOfBuildings].x = x ;
-      listOfPlayers[msg.sender].numberOfBuildings++;
+        setBuilding1(x,y, msg.sender);
      }
      if(buildingData[1][0] > 0){
-        id = 2;
+        
          buildingData[1][0] =  x;
          buildingData[1][1] = y;
-         listOfPlayers[msg.sender].playerBuildings[listOfPlayers[msg.sender].numberOfBuildings].id =  id;
-        
-        listOfPlayers[msg.sender].playerBuildings[listOfPlayers[msg.sender].numberOfBuildings].y = y ; 
-        listOfPlayers[msg.sender].playerBuildings[listOfPlayers[msg.sender].numberOfBuildings].x = x ;
-      listOfPlayers[msg.sender].numberOfBuildings++;
+         setBuilding2(x,y, msg.sender);
+       
      }
      if(buildingData[2][0] > 0){
-         id = 3;
+        
          
          buildingData[2][0] =  x;
          buildingData[2][1] = y;
-          listOfPlayers[msg.sender].playerBuildings[listOfPlayers[msg.sender].numberOfBuildings].id =  id;
+        setBuilding3(x,y, msg.sender);
         
-        listOfPlayers[msg.sender].playerBuildings[listOfPlayers[msg.sender].numberOfBuildings].y = y ; 
-        listOfPlayers[msg.sender].playerBuildings[listOfPlayers[msg.sender].numberOfBuildings].x = x ;
-      listOfPlayers[msg.sender].numberOfBuildings++;
+        
      }
      if(buildingData[3][0] > 0){
-         id = 4;
+          buildingData[3][0] =  x;
+         buildingData[3][1] = y;
+       setBuilding4(x,y, msg.sender);
      }
-     if(buildingData[4][2] > 0){}
-     if(buildingData[5][0] > 0){}
+     if(buildingData[4][0] > 0){ 
+         buildingData[4][0] =  x;
+         buildingData[4][1] = y;
+         setBuilding5(x,y, msg.sender);
+     }
+     
  
     
     
@@ -111,15 +107,49 @@ contract Game {
     
     }
     
-    function setPlayerBuildings(uint harvestTime, uint level, uint x, uint y) internal {
-    
-    //update( buildings [ msg.sender ] [ index ] )
-    
-    
+  
+     function setBuilding1(uint x, uint y, address _sender) internal {
+        
+        listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].id =  1;
+        listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].y = y ; 
+        listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].x = x ;
+       
+        listOfPlayers[_sender].numberOfBuildings++;
     }
+    function setBuilding2(uint x, uint y, address _sender) internal {
+        
+        listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].id =  2;
+        listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].y = y ; 
+        listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].x = x ;
+        listOfPlayers[_sender].numberOfBuildings++;
+    }
+     function setBuilding3(uint x, uint y, address _sender) internal {
+        
+        listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].id =  3;
+    listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].y = y ; 
+        listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].x = x ;
+        listOfPlayers[msg.sender].numberOfBuildings++;
+    }
+     function setBuilding4(uint x, uint y, address _sender) internal {
+        
+        listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].id =  4;
+         listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].y = y ; 
+        listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].x = x ;
+        listOfPlayers[msg.sender].numberOfBuildings++;
+    }
+     function setBuilding5(uint x, uint y, address _sender) internal {
+        
+        listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].id =  5;
+        listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].y = y ; 
+        listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].x = x ;
+        listOfPlayers[msg.sender].numberOfBuildings++;
+    }
+     
     
 
 }
+
+
 contract ERC20 {
     
     
