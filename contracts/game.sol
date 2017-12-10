@@ -1,5 +1,5 @@
 pragma solidity ^0.4.3;
-pragma solidity ^0.4.16;
+
 
 interface tokenRecipient { function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData) public; }
 
@@ -10,16 +10,23 @@ contract TokenERC20 {
     uint8 public decimals = 18;
     // 18 decimals is the strongly suggested default, avoid changing it
     uint256 public totalSupply;
-
+    struct Resources {
+        uint256 Wood;
+        uint256 Water;
+        uint256 Soil;
+        uint256 Metal;
+        uint256 Oxygen;
+        
+    }
     // This creates an array with all balances
-    mapping (address =>  mapping( uint256 => uint256) ) public balanceOf;
+    mapping (address => Resources ) public balanceOf;
     mapping (address => mapping (address => uint256)) public allowance;
 
     // This generates a public event on the blockchain that will notify clients
-    event Transfer(address indexed from, address indexed to, uint256 value, uint256 resource_index);
+    event Transfer(address indexed from, address indexed to, uint256 value, string _resource);
 
     // This notifies clients about the amount burnt
-    event Burn(address indexed from, uint256 value, uint256 resource_index);
+    event Burn(address indexed from, uint256 value);
 
     /**
      * Constrctor function
@@ -29,11 +36,10 @@ contract TokenERC20 {
     function TokenERC20(
         uint256 initialSupply,
         string tokenName,
-        uint256 resource_index,
         string tokenSymbol
     ) public {
         totalSupply = initialSupply * 10 ** uint256(decimals);  // Update total supply with the decimal amount
-        balanceOf[msg.sender][resource_index] = totalSupply;                // Give the creator all initial tokens
+        balanceOf[msg.sender].Wood = totalSupply;                // Give the creator all initial tokens
         name = tokenName;                                   // Set the name for display purposes
         symbol = tokenSymbol;                               // Set the symbol for display purposes
     }
@@ -41,22 +47,22 @@ contract TokenERC20 {
     /**
      * Internal transfer, only can be called by this contract
      */
-    function _transfer(address _from, address _to, uint _value, uint _resource_index) internal {
+    function _transferWood(address _from, address _to, uint _value) internal {
         // Prevent transfer to 0x0 address. Use burn() instead
         require(_to != 0x0);
         // Check if the sender has enough
-        require(balanceOf[_from][_resource_index] >= _value);
+        require(balanceOf[_from].Wood >= _value);
         // Check for overflows
-        require(balanceOf[_to][_resource_index] + _value > balanceOf[_to][_resource_index]);
+        require(balanceOf[_to].Wood + _value > balanceOf[_to]);
         // Save this for an assertion in the future
-        uint previousBalances = balanceOf[_from][_resource_index] + balanceOf[_to][_resource_index];
+        uint previousBalances = balanceOf[_from] + balanceOf[_to];
         // Subtract from the sender
-        balanceOf[_from][_resource_index] -= _value;
+        balanceOf[_from] -= _value;
         // Add the same to the recipient
-        balanceOf[_to][_resource_index] += _value;
-        Transfer(_from, _to, _value, _resource_index);
+        balanceOf[_to] += _value;
+        Transfer(_from, _to, _value, "Wood");
         // Asserts are used to use static analysis to find bugs in your code. They should never fail
-        assert(balanceOf[_from][_resource_index] + balanceOf[_to][_resource_index] == previousBalances);
+        assert(balanceOf[_from] + balanceOf[_to] == previousBalances);
     }
 
     /**
@@ -67,8 +73,8 @@ contract TokenERC20 {
      * @param _to The address of the recipient
      * @param _value the amount to send
      */
-    function transfer(address _to, uint256 _value, uint256 _resource_index) public {
-        _transfer(msg.sender, _to, _value, _resource_index);
+    function transfer(address _to, uint256 _value, string _resource) public {
+        _transferWood(msg.sender, _to, _value, _resource);
     }
 
     /**
@@ -80,10 +86,10 @@ contract TokenERC20 {
      * @param _to The address of the recipient
      * @param _value the amount to send
      */
-    function transferFrom(address _from, address _to, uint256 _value, uint256 _resource_index) public returns (bool success) {
+    function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {
         require(_value <= allowance[_from][msg.sender]);     // Check allowance
         allowance[_from][msg.sender] -= _value;
-        _transfer(_from, _to, _value, _resource_index);
+        _transfer(_from, _to, _value);
         return true;
     }
 
@@ -127,13 +133,15 @@ contract TokenERC20 {
      *
      * @param _value the amount of money to burn
      */
-    function burn(uint256 _value, uint256 _resource_index) public returns (bool success) {
-        require(balanceOf[msg.sender][_resource_index] >= _value);   // Check if the sender has enough
-        balanceOf[msg.sender][_resource_index] -= _value;            // Subtract from the sender
+    function burn(uint256 _value) public returns (bool success) {
+        require(balanceOf[msg.sender] >= _value);   // Check if the sender has enough
+        balanceOf[msg.sender] -= _value;            // Subtract from the sender
         totalSupply -= _value;                      // Updates totalSupply
-        Burn(msg.sender, _value, _resource_index);
+        Burn(msg.sender, _value);
         return true;
     }
+
+ 
 
 
 /** Create new resources as ERC20 tokens, need to call default again, but only for owner
@@ -144,10 +152,10 @@ contract TokenERC20 {
  * 
  * 
  * */
-  function createResource(uint256 _amount)
+  function createResource(uint256 _amount){
   
 }
-
+}
 
 
 
