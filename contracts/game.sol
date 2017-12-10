@@ -6,20 +6,27 @@ pragma solidity ^0.4.3;
 contract Game {
     
     address owner;
-    
+    TokenERC20 r;
     modifier onlyOwner {
         require(msg.sender == owner);
         _;
     }
     uint256 totalPlayers;
-   
+    struct resourcesRequired {
+        uint256 Wood;
+        uint256 Water;
+        uint256 Soil;
+        uint256 Metal;
+        uint256 Oxygen;
+    }
+  mapping (uint256  => mapping(uint => resourcesRequired) ) public requiredResources;
     struct Building {
-    uint id;
-    uint harvestTime;
-    
-    uint level;
-    uint x;
-    uint y;
+        uint id;
+        uint harvestTime;
+       
+        uint level;
+        uint x;
+        uint y;
         
     }
     mapping (address =>  Building ) public buildings;
@@ -28,6 +35,7 @@ contract Game {
         uint256 playerID;
         Building[] playerBuildings;
         uint level;
+       
         
     }
     mapping (address => player) public listOfPlayers;
@@ -77,13 +85,13 @@ contract Game {
          
          buildingData[0][0] =  x;
          buildingData[0][1] = y;
-        setBuilding1(x,y, msg.sender);
+        setBuilding(1,x,y, msg.sender);
      }
      if(buildingData[1][0] > 0){
         
          buildingData[1][0] =  x;
          buildingData[1][1] = y;
-         setBuilding2(x,y, msg.sender);
+         setBuilding(2,x,y, msg.sender);
        
      }
      if(buildingData[2][0] > 0){
@@ -91,67 +99,47 @@ contract Game {
          
          buildingData[2][0] =  x;
          buildingData[2][1] = y;
-        setBuilding3(x,y, msg.sender);
+        setBuilding(3,x,y, msg.sender);
         
         
      }
      if(buildingData[3][0] > 0){
           buildingData[3][0] =  x;
          buildingData[3][1] = y;
-       setBuilding4(x,y, msg.sender);
+       setBuilding(4,x,y, msg.sender);
      }
      if(buildingData[4][0] > 0){ 
          buildingData[4][0] =  x;
          buildingData[4][1] = y;
-         setBuilding5(x,y, msg.sender);
+         setBuilding(5,x,y, msg.sender);
      }
     }
     
     function harvestResources() {
         //loop
         
+        
     }
   
-     function setBuilding1(uint x, uint y, address _sender) internal {
+   function setBuilding(uint id, uint x, uint y, address _sender) internal {
+    require(id > 0 && id < 6);
+    
+    
+    uint[5] memory balance = r.getBalances(_sender);
         
-        listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].id =  1;
+    require(balance[0] >= requiredResources[id][1].Wood); 
+    require(balance[1] >= requiredResources[id][1].Water);
+    require(balance[2] >= requiredResources[id][1].Soil);
+    require(balance[3] >= requiredResources[id][1].Metal);
+    require(balance[4] >= requiredResources[id][1].Oxygen);
+        
+        listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].id =  id;
         listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].y = y ; 
         listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].x = x ;
         listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].harvestTime = block.timestamp ;
         listOfPlayers[_sender].numberOfBuildings++;
     }
-    function setBuilding2(uint x, uint y, address _sender) internal {
-        
-        listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].id =  2;
-        listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].y = y ; 
-        listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].x = x ;
-        listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].harvestTime = block.timestamp ;
-        listOfPlayers[_sender].numberOfBuildings++;
-    }
-     function setBuilding3(uint x, uint y, address _sender) internal {
-        
-        listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].id =  3;
-    listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].y = y ; 
-        listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].x = x ;
-        listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].harvestTime = block.timestamp ;
-        listOfPlayers[msg.sender].numberOfBuildings++;
-    }
-     function setBuilding4(uint x, uint y, address _sender) internal {
-        
-        listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].id =  4;
-         listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].y = y ; 
-        listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].x = x ;
-        listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].harvestTime = block.timestamp ;
-        listOfPlayers[msg.sender].numberOfBuildings++;
-    }
-     function setBuilding5(uint x, uint y, address _sender) internal {
-        
-        listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].id =  5;
-        listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].y = y ; 
-        listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].x = x ;
-        listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].harvestTime = block.timestamp ;
-        listOfPlayers[msg.sender].numberOfBuildings++;
-    }
+
      
     }
 
@@ -180,7 +168,7 @@ contract TokenERC20 {
     event Transfer(address indexed from, address indexed to, uint256 value, string _resource);
 
     // This notifies clients about the amount burnt
-    event Burn(address indexed from, uint256 value);
+   event Burn(address indexed from, uint256 value, uint256 id);
     
      event Create(address indexed from, uint256 value);
 
@@ -198,6 +186,10 @@ contract TokenERC20 {
         balanceOf[msg.sender].Wood = totalSupply;                // Give the creator all initial tokens
         name = tokenName;                                   // Set the name for display purposes
         symbol = tokenSymbol;                               // Set the symbol for display purposes
+    }
+    
+    function getBalances(address _addr) public constant returns (uint[5]){
+    		return ( [balanceOf[_addr].Wood,balanceOf[_addr].Water,balanceOf[_addr].Soil,balanceOf[_addr].Metal,balanceOf[_addr].Oxygen] );
     }
 
     /**
@@ -357,11 +349,31 @@ contract TokenERC20 {
      *
      * @param _value the amount of money to burn
      */
-    function burnWood(uint256 _value) public returns (bool success) {
-        require(balanceOf[msg.sender].Wood >= _value);   // Check if the sender has enough
-        balanceOf[msg.sender].Wood -= _value;            // Subtract from the sender
-        totalSupply -= _value;                      // Updates totalSupply
-        Burn(msg.sender, _value);
+     function burn(address _addr,uint id, uint256 _value) internal returns (bool success) {
+        require( id > 0 && id <6);
+        if(id == 1){
+            require(balanceOf[msg.sender].Wood >= _value);
+            balanceOf[_addr].Wood -= _value;
+        }
+        if(id == 2){
+            require(balanceOf[msg.sender].Water >= _value);
+            balanceOf[_addr].Water -= _value;
+        }
+        if(id == 3){
+            require(balanceOf[msg.sender].Soil >= _value);
+            balanceOf[_addr].Soil -= _value;
+        }
+        if(id == 4){
+            require(balanceOf[msg.sender].Metal >= _value);
+            balanceOf[_addr].Metal -= _value;
+        }
+        if(id == 5){
+            require(balanceOf[msg.sender].Oxygen >= _value);
+            balanceOf[_addr].Oxygen -= _value;
+        }
+        
+        //totalSupply -= _value;                      // Updates totalSupply
+        Burn(_addr, _value, id);
         return true;
     }
 
