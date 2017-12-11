@@ -23,6 +23,11 @@ HUD.prototype ={
     this.buildButton.inputEnabled = true;
     Actions.addHover(this.buildButton);
 
+    this.getButton('harvestButton');
+    this.harvestButton.inputEnabled = true;
+    Actions.addHover(this.harvestButton);
+
+
     var hudGroup = this.fetchGroup();
     hudGroup.fixedToCamera = true;
     hudGroup.onChildInputOver.add(this.wake,this);

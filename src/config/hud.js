@@ -20,7 +20,17 @@ const hudConfig = {
     sprite: 'hud_buttons',
     frame:0,
     //frame:2,
-    content:'Save',
+    content:'Build',
+    anchor:0.5
+  },
+  harvestButton:{
+    x:330,
+    //x:505,
+    y:465,
+    sprite: 'hud_buttons',
+    frame:3,
+    //frame:2,
+    content:'Harvest',
     anchor:0.5
   }
 }
