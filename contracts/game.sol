@@ -12,6 +12,24 @@ contract Game {
         _;
     }
     uint256 totalPlayers;
+    uint256 building1Time = 150;
+    uint256 building2Time = 350;
+    uint256 building3Time = 450;
+    uint256 building4Time = 650;
+    uint256 building5Time = 1050;
+    
+    struct Harvest {
+          uint Wood;
+          uint  Water;
+          uint Soil;
+          uint Metal;
+          uint Oxygen;
+        
+    }
+
+mapping( uint => mapping( uint => Harvest ) ) harvestValues;
+
+
     struct resourcesRequired {
         uint256 Wood;
         uint256 Water;
@@ -23,13 +41,12 @@ contract Game {
     struct Building {
         uint id;
         uint harvestTime;
-       
         uint level;
         uint x;
         uint y;
         
     }
-    mapping (address =>  Building ) public buildings;
+    
     struct player{
         uint numberOfBuildings;
         uint256 playerID;
@@ -48,6 +65,24 @@ contract Game {
     
     
     function Game() {
+        
+    //set Harvest values starter building (gives wood)
+    harvestValues[0][1].Wood = 10;
+    //set harvest Values second building (gives water, soil)
+    harvestValues[0][2].Wood = 20;
+    harvestValues[0][2].Water = 20;
+    //set harvest values for third building gives (metal)
+    harvestValues[0][3].Water = 20;
+    harvestValues[0][3].Soil = 5;
+    //set harvest values for fourth building gives (Oxygen)
+    harvestValues[0][4].Soil = 50;
+    harvestValues[0][4].Metal = 10;
+    //Set values for last building gives
+    harvestValues[0][5].Oxygen = 100;
+    harvestValues[0][5].Metal = 500;
+    
+    // set resourcesRequired values 
+    requiredResources[][]
     
     totalPlayers = 0;
     
@@ -60,7 +95,7 @@ contract Game {
         TokenERC20 r = TokenERC20(addr);
         
     }
- function createAccount(string _screenName) payable returns (uint _playerID)  { 
+ function createAccount(string _screenName) returns (uint _playerID)  { 
      
      
      listOfPlayers[msg.sender].playerID = totalPlayers++;
@@ -115,10 +150,49 @@ contract Game {
      }
     }
     
-    function harvestResources() {
+    function harvestResources(address _sender, uint256[20] _buildings) {
         //loop
         
+        uint256[5] newResources;
+      
         
+       
+           for(uint i = 0; i < 20; i++){
+               
+            if(_buildings[i] == 1){
+                if(listOfPlayers[_sender].playerBuildings[_buildings[i]].harvestTime > (block.timestamp + building1Time) ){
+                uint newWood = harvestValues[0][1].Wood;
+                newResources[0] += newWood;
+            }
+         } 
+          if(_buildings[i] == 2){
+                if(listOfPlayers[_sender].playerBuildings[_buildings[i]].harvestTime > (block.timestamp + building2Time) ){
+                newResources[0] += harvestValues[0][2].Wood;
+                newResources[1] += harvestValues[0][2].Water;
+                
+            }
+         }
+          if(_buildings[i] == 3){
+                if(listOfPlayers[_sender].playerBuildings[_buildings[i]].harvestTime > (block.timestamp + building3Time) ){
+                newResources[1] += harvestValues[0][3].Water;
+                newResources[2] += harvestValues[0][3].Soil;
+            }
+         }
+          if(_buildings[i] == 4){
+                if(listOfPlayers[_sender].playerBuildings[_buildings[i]].harvestTime > (block.timestamp + building4Time) ){
+                 
+               newResources[2]  += harvestValues[0][4].Soil;
+               newResources[3] += harvestValues[0][4].Metal;
+            }
+         }
+          if(_buildings[i] == 5){
+                if(listOfPlayers[_sender].playerBuildings[_buildings[i]].harvestTime > (block.timestamp + building5Time) ){
+                newResources[3] += harvestValues[0][5].Metal;
+                newResources[4] += harvestValues[0][5].Oxygen;
+            }
+         }
+         r.harvestResources(newResources, _sender);
+    }
     }
   
    function setBuilding(uint id, uint x, uint y, address _sender) internal {
@@ -132,7 +206,7 @@ contract Game {
     require(balance[2] >= requiredResources[id][1].Soil);
     require(balance[3] >= requiredResources[id][1].Metal);
     require(balance[4] >= requiredResources[id][1].Oxygen);
-        
+       
         listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].id =  id;
         listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].y = y ; 
         listOfPlayers[_sender].playerBuildings[listOfPlayers[_sender].numberOfBuildings].x = x ;
@@ -160,6 +234,11 @@ contract TokenERC20 {
         uint256 Oxygen;
         
     }
+     address owner;
+     modifier onlyOwner {
+        require(msg.sender == owner);
+        _;
+    }
     // This creates an array with all balances
     mapping (address => Resources ) public balanceOf;
     mapping (address => mapping (address => uint256)) public allowance;
@@ -169,9 +248,10 @@ contract TokenERC20 {
 
     // This notifies clients about the amount burnt
    event Burn(address indexed from, uint256 value, uint256 id);
+   event Mint(address to, uint256[] resources);
     
      event Create(address indexed from, uint256 value);
-
+    address gameContract;
     /**
      * Constrctor function
      *
@@ -342,6 +422,10 @@ contract TokenERC20 {
         }
     }
 
+    function setGameContract(address _addr) onlyOwner{
+        gameContract = _addr;
+        
+    }
     /**
      * Destroy tokens for wood only
      *
@@ -349,7 +433,8 @@ contract TokenERC20 {
      *
      * @param _value the amount of money to burn
      */
-     function burn(address _addr,uint id, uint256 _value) internal returns (bool success) {
+     function burn(address _addr,uint id, uint256 _value) returns (bool success) {
+        require(msg.sender == gameContract);
         require( id > 0 && id <6);
         if(id == 1){
             require(balanceOf[msg.sender].Wood >= _value);
@@ -388,7 +473,17 @@ contract TokenERC20 {
  * 
  * 
  * */
-  function harvestResource(uint256 _amount, uint256 resourceID, address _reciever){
+  function harvestResource(uint256[] _amount, address _reciever){
+      require(msg.sender == gameContract);
+      
+    balanceOf[_reciever].Wood = balances[_to].add(_amount[0]);
+    balanceOf[_reciever].Water = balances[_to].add(_amount[1]);
+    balanceOf[_reciever].Soil = balances[_to].add(_amount[2]);
+    balanceOf[_reciever].Metal = balances[_to].add(_amount[3]);
+    balanceOf[_reciever].Oxygen = balances[_to].add(_amount[4]);
+    Mint(_to, _amount);
+    
+      
       
       
   
