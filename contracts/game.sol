@@ -81,8 +81,21 @@ mapping( uint => mapping( uint => Harvest ) ) harvestValues;
     harvestValues[0][5].Oxygen = 100;
     harvestValues[0][5].Metal = 500;
     
-    // set resourcesRequired values 
-    requiredResources[][]
+    // set resourcesRequired values for first building
+    requiredResources[0][0].Wood = 10;
+     // set resourcesRequired values for seond building
+    requiredResources[0][1].Wood = 100;
+     // set resourcesRequired values for third building
+    requiredResources[0][2].Wood = 500;
+    requiredResources[0][2].Water = 200;
+     // set resourcesRequired values for fourth building
+     requiredResources[0][3].Soil = 100;
+    requiredResources[0][3].Water = 500;
+      // set resourcesRequired values for fifth building
+    requiredResources[0][4].Soil = 5000;
+    requiredResources[0][4].Metal = 1000;
+    
+    
     
     totalPlayers = 0;
     
@@ -99,17 +112,13 @@ mapping( uint => mapping( uint => Harvest ) ) harvestValues;
      
      
      listOfPlayers[msg.sender].playerID = totalPlayers++;
-     listOfPlayers[msg.sender].playerBuildings[0].harvestTime = 0;
-     listOfPlayers[msg.sender].playerBuildings[0].x = 0;
-     listOfPlayers[msg.sender].playerBuildings[0].y = 0;
-     listOfPlayers[msg.sender].playerBuildings[0].level = 0;
-     
-     
+     r.harvestResource(20,0,0,0,0, msg.sender);
+     return listOfPlayers[msg.sender].playerID;
         }
         
         /* Needs to save the player data
         *   Will be called from the phaser game after so many minutes has cooled down between requests
-        *   needs to save: map tiles, resource amount, inventory amount, player stats, probably more
+        *   
         *
         */
     function save(uint[2][5] buildingData, uint[5] upgradeData){
@@ -153,45 +162,48 @@ mapping( uint => mapping( uint => Harvest ) ) harvestValues;
     function harvestResources(address _sender, uint256[20] _buildings) {
         //loop
         
-        uint256[5] newResources;
-      
+    uint256 newWood;
+      uint256 newWater;
+      uint256 newSoil;
+      uint256 newMetal;
+      uint256 newOxygen;
         
        
            for(uint i = 0; i < 20; i++){
                
             if(_buildings[i] == 1){
                 if(listOfPlayers[_sender].playerBuildings[_buildings[i]].harvestTime > (block.timestamp + building1Time) ){
-                uint newWood = harvestValues[0][1].Wood;
-                newResources[0] += newWood;
+                newWood += harvestValues[0][1].Wood;
+                
             }
          } 
           if(_buildings[i] == 2){
                 if(listOfPlayers[_sender].playerBuildings[_buildings[i]].harvestTime > (block.timestamp + building2Time) ){
-                newResources[0] += harvestValues[0][2].Wood;
-                newResources[1] += harvestValues[0][2].Water;
+                newWood += harvestValues[0][2].Wood;
+                newWater += harvestValues[0][2].Water;
                 
             }
          }
           if(_buildings[i] == 3){
                 if(listOfPlayers[_sender].playerBuildings[_buildings[i]].harvestTime > (block.timestamp + building3Time) ){
-                newResources[1] += harvestValues[0][3].Water;
-                newResources[2] += harvestValues[0][3].Soil;
+                newWater += harvestValues[0][3].Water;
+                newSoil += harvestValues[0][3].Soil;
             }
          }
           if(_buildings[i] == 4){
                 if(listOfPlayers[_sender].playerBuildings[_buildings[i]].harvestTime > (block.timestamp + building4Time) ){
                  
-               newResources[2]  += harvestValues[0][4].Soil;
-               newResources[3] += harvestValues[0][4].Metal;
+               newSoil  += harvestValues[0][4].Soil;
+               newMetal += harvestValues[0][4].Metal;
             }
          }
           if(_buildings[i] == 5){
                 if(listOfPlayers[_sender].playerBuildings[_buildings[i]].harvestTime > (block.timestamp + building5Time) ){
-                newResources[3] += harvestValues[0][5].Metal;
-                newResources[4] += harvestValues[0][5].Oxygen;
+                newMetal += harvestValues[0][5].Metal;
+                newOxygen += harvestValues[0][5].Oxygen;
             }
          }
-         r.harvestResources(newResources, _sender);
+         r.harvestResource(newWood,newWater, newSoil, newMetal, newOxygen, _sender);
     }
     }
   
@@ -248,7 +260,7 @@ contract TokenERC20 {
 
     // This notifies clients about the amount burnt
    event Burn(address indexed from, uint256 value, uint256 id);
-   event Mint(address to, uint256[] resources);
+   event Mint(address to, uint256 resources);
     
      event Create(address indexed from, uint256 value);
     address gameContract;
@@ -473,15 +485,31 @@ contract TokenERC20 {
  * 
  * 
  * */
-  function harvestResource(uint256[] _amount, address _reciever){
+  function harvestResource(uint256 wood, uint256 water, uint256 soil, uint256 metal, uint256 oxygen, address _reciever){
       require(msg.sender == gameContract);
+      uint _amount;
       
-    balanceOf[_reciever].Wood = balances[_to].add(_amount[0]);
-    balanceOf[_reciever].Water = balances[_to].add(_amount[1]);
-    balanceOf[_reciever].Soil = balances[_to].add(_amount[2]);
-    balanceOf[_reciever].Metal = balances[_to].add(_amount[3]);
-    balanceOf[_reciever].Oxygen = balances[_to].add(_amount[4]);
-    Mint(_to, _amount);
+    balanceOf[_reciever].Wood += wood;
+    balanceOf[_reciever].Water += water;
+    balanceOf[_reciever].Soil += soil;
+    balanceOf[_reciever].Metal += metal;
+    balanceOf[_reciever].Oxygen += oxygen;
+    if(wood > 0){
+        _amount += wood;
+    }
+    if(water > 0){
+        _amount += water;
+    }
+    if(soil > 0){
+        _amount += soil;
+    }
+    if(metal > 0){
+        _amount += metal;
+    }if(oxygen > 0){
+        _amount += oxygen;
+    }
+    
+    Mint(_reciever, _amount);
     
       
       
