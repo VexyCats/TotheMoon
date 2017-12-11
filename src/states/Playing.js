@@ -15,7 +15,6 @@ var Playing = function(cgame){
 	this.alert = new Alert(cgame);
 	this.hud = new HUD(cgame);
 	this.buildingMenu = new BuildingMenu(cgame);
-	this.tileSelector = new TileSelector(cgame);
 }
 
 
@@ -45,14 +44,8 @@ Playing.prototype = {
 			{screenName: 'Demo Player'}
 		);
 
-
-
 		//Loadup Contract
 		this.contract = new Contract();
-
-		//console.log(cursors)
-
-
 
 		//add home base to center of map in between four tiles
 		this.homeBaseCreate();
@@ -63,6 +56,9 @@ Playing.prototype = {
 
 		//Test alert
 		//this.alert.show('success','Message','Title',4);
+
+		//set up TileSelector
+		this.tileSelector = new TileSelector(this.game);
 
 		//Show HUD
 		this.hud.show();
