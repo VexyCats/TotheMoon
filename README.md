@@ -55,3 +55,4 @@ To run production build
 ### Sources / Credits
 [FreePik](https://www.freepik.com/free-vector/isometric-futuristic-house_1086624.htm)
 [FreePik](https://www.freepik.com/free-vector/correct-and-wrong-labels_789508.htm)
+[Freepik](https://www.freepik.com/free-vector/multimedia-buttons-collection_1014213.htm'>Designed by Freepik)
