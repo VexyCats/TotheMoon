@@ -43,7 +43,8 @@
 
 			//game.load.spr('close_icon', 'assets/close_icon.png');
 			game.load.spritesheet('close_icons', 'assets/close_icons.png', 93, 124);
-			game.load.spritesheet('hud_buttons', 'assets/hudButtons.png', 160, 56);
+			game.load.spritesheet('hud_buttons', 'assets/hudButtons.png', 184, 64);
+			//game.load.spritesheet('hud_buttons', 'assets/hudButtons.png', 134, 56);
 
 				},
 
