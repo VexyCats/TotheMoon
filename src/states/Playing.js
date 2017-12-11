@@ -2,6 +2,7 @@
 import Contract from '../components/ContractApi';
 import Alert from '../util/Alert';
 import HUD from '../util/Hud';
+import BuildingMenu from '../components/BuildingMenu';
 import Building from '../components/Building';
 import Player from '../components/PlayerData';
 import HomeBaseMenu from '../components/homeBaseMenu';
@@ -12,6 +13,7 @@ var Playing = function(cgame){
 	this.game = game = cgame;
 	this.alert = new Alert(cgame);
 	this.hud = new HUD(cgame);
+	this.buildingMenu = new BuildingMenu(cgame);
 }
 
 
@@ -62,6 +64,7 @@ Playing.prototype = {
 
 		//Show HUD
 		this.hud.show();
+		this.hud.buildButton.events.onInputDown.add(this.buildingMenu.show,this.buildingMenu);
 
 
 
