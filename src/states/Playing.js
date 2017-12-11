@@ -64,9 +64,10 @@ Playing.prototype = {
 
 		//Show HUD
 		this.hud.show();
-		this.hud.buildButton.events.onInputDown.add(this.buildingMenu.show,this.buildingMenu);
+		this.hud.buildButton.events.onInputDown.add(this.showBuildOptions,this);
 
-
+			//Test
+		//this.contract.createPlayer();
 
 		},
 
@@ -164,14 +165,12 @@ Playing.prototype = {
 						},
 
 		homeBaseCreate: function() {
-		var base;
-		base = game.add.sprite(game.world.centerX, game.world.centerY, 'homebase', this);
-		this.player.instance = base;
+			var base;
+			base = game.add.sprite(game.world.centerX, game.world.centerY, 'homebase', this);
+			this.player.instance = base;
 
-		base.inputEnabled = true;
-		base.events.onInputOver.add(this.showMenu, this);
-
-
+			base.inputEnabled = true;
+			base.events.onInputOver.add(this.showMenu, this);
 		},
 		showMenu: function(){
 
@@ -213,18 +212,11 @@ Playing.prototype = {
 
 			this.instance = menu;
 
+			this.instance.inputEnabled = true;
 
-		this.instance.inputEnabled = true;
-
-		this.instance.events.onInputOut.add(this.hide, this);
-
+			this.instance.events.onInputOut.add(this.hide, this);
 
 			//var playerInventory = playerData.inventory[0];
-
-
-
-
-
 
 		},
 
@@ -234,17 +226,29 @@ Playing.prototype = {
 
 			homeBaseMenu.hide();
 		},
-
-
-
 		placeBuilding: function(){
 
+		},
+		showBuildOptions: function(){
+			this.buildingMenu.show();
+			const that = this;
+			this.buildingMenu.options.forEach( function(option){
+				option.events.destroy();
+				option.events.onInputDown.add( function(){
+					that.buildingMenu.hide();
+					that.pickBuildingLocation(option._text);
+				});
+			});
 
+		},
+		pickBuildingLocation: function(type){
+				console.log(type)
 
-
-
+		},
+		addNewBuilding: function(type){
 
 		}
+
 
 
 
