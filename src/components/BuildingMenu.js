@@ -6,6 +6,7 @@ import Alert from '../util/Alert.js';
 var game,
 BuildingMenu = function(cgame){
   this.game = cgame;
+  this.alert = new Alert(cgame);
   var errors=[];
   //this.show();//Set the position in the world relative to other components
   //this.hide();
@@ -15,9 +16,16 @@ BuildingMenu = function(cgame){
 
 BuildingMenu.prototype = {
     show: function(){
+      if(this.buildMenuGroup){
+        this.buildMenuGroup.revive();
+        return;
+      }
+
       this.getBackground();
       this.getTitle();
       this.getOptions();
+      this.getClose()
+      this.buildMenuGroup.fixedToCamera = true;
 
     },
     hide: function(){
@@ -43,6 +51,20 @@ BuildingMenu.prototype = {
       this.background.inputEnabled = true;
 
       return this.background;
+    },
+    getClose: function(){
+      if(this.close)
+        return this.close;
+
+      var close = this.alert.getCloseButton('error',1);
+      close.x = buildingMenuConfig.positions.close.x;
+      close.y = buildingMenuConfig.positions.close.y;
+      close.events.onInputDown.add(this.hide,this);
+
+      this.close = close;
+      this.buildMenuGroup.add(this.close);
+
+      return this.close;
     },
     getTitle: function(){
       if(this.title)

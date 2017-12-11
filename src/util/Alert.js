@@ -22,8 +22,8 @@ Alert.prototype ={
     close.anchor.y = 0.5;
     close.inputEnabled = true;
     close.input.useHandCursor = true;
-    close.scale.x = 0.4,
-    close.scale.y = 0.4;
+    close.scale.x = 0.3,
+    close.scale.y = 0.3;
     Actions.addHover(close);//Add hover action to the button
     return close;
   },

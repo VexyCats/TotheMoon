@@ -30,7 +30,8 @@ const buildingMenuConfig = {
       {x:230,y:210},
       {x:395,y:210},
       {x:300,y:270},
-    ]
+    ],
+    close:{x:530,y:110}
   }
 
 }
