@@ -1,5 +1,5 @@
 
-var buildingMenuConfig = {
+const buildingMenuConfig = {
 	x:150,
   y:50,
   height:350,

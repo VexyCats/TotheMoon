@@ -1,4 +1,4 @@
-var BuldingTypes = {
+const BuldingTypes = {
       wood:{
         sprite:'house'
       },

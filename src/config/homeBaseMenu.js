@@ -1,5 +1,5 @@
 
-var homeBaseMenuSprite = function(game) {
+const homeBaseMenuSprite = function(game) {
 	return {
 		sprite:'HomeBaseMenu',
 		x: this.game.camera.world.centerX,

@@ -1,3 +1,3 @@
-var Address = '';
+const Address = '';
 
 export {Address};

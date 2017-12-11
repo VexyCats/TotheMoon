@@ -1,3 +1,3 @@
-var Abi = [];
+const Abi = [];
 
 export default Abi;
