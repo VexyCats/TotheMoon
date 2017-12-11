@@ -2,6 +2,7 @@
 import Contract from '../components/ContractApi';
 import Alert from '../util/Alert';
 import HUD from '../util/Hud';
+import TileSelector from '../util/TileSelector';
 import BuildingMenu from '../components/BuildingMenu';
 import Building from '../components/Building';
 import Player from '../components/PlayerData';
@@ -14,6 +15,7 @@ var Playing = function(cgame){
 	this.alert = new Alert(cgame);
 	this.hud = new HUD(cgame);
 	this.buildingMenu = new BuildingMenu(cgame);
+	this.tileSelector = new TileSelector(cgame);
 }
 
 
@@ -243,6 +245,7 @@ Playing.prototype = {
 		},
 		pickBuildingLocation: function(type){
 				console.log(type)
+				this.tileSelector.show();
 
 		},
 		addNewBuilding: function(type){
