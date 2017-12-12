@@ -29,7 +29,11 @@ TileSelector.prototype = {
     this.isShown = false;
     this.selector.kill();
   },
+  stateChanged: function(error){
+    this.selector.lineColor = error?tileSelectorConfig.color.errorLine : tileSelectorConfig.color.line;
+  },
   update:function(a,b,c){
+      this.stateChanged()
       const that = this;
       game.add.tween(this.selector).to({
         x:b+game.camera.x-(this.selector.width/2),

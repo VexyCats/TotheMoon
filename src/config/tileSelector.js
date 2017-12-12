@@ -1,7 +1,8 @@
 const tileSelectorConfig = {
     color: {
       fill:0xcccccc,
-      line: 0xaaffbb
+      line: 0xaaffbb,
+      errorLine:0xffaabb
     },
     opacity: {
       fill:0.1,
