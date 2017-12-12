@@ -33,6 +33,8 @@ TileSelector.prototype = {
     this.selector.lineColor = error?tileSelectorConfig.color.errorLine : tileSelectorConfig.color.line;
   },
   update:function(a,b,c){
+      if(!this.isShown)
+        return;
       this.stateChanged()
       const that = this;
       game.add.tween(this.selector).to({
