@@ -19,6 +19,7 @@ var Playing = function(cgame){
 
 
 Playing.prototype = {
+		buildings: [],
 
 
 		preload: function(){
@@ -29,52 +30,44 @@ Playing.prototype = {
 
 				this.load.image('titleScreen', 'assets/titleScreen.png');
 				this.load.image("button", "assets/button.png")
-				this.load.image("house", "assets/house_top.png")
 				//TheMoon.playingConfig(this.game);
 		},
 		create: function(){
 
-			cursors = this.game._cursors;//TODO store cursors values for use
+				cursors = this.game._cursors;//TODO store cursors values for use
 
-		this.background = this.drawMap();
+				this.background = this.drawMap();
 
-		/* create new player account and set resources */
+				/* create new player account and set resources */
 
-		this.player = new Player(
-			{screenName: 'Demo Player'}
-		);
+				this.player = new Player(
+					{screenName: 'Demo Player'}
+				);
 
-		//Loadup Contract
-		this.contract = new Contract();
+				//Loadup Contract
+				this.contract = new Contract();
 
-		//add home base to center of map in between four tiles
-		this.homeBaseCreate();
-		homeBaseMenu = new HomeBaseMenu(this.game,this.player);
+				//add home base to center of map in between four tiles
+				this.homeBaseCreate();
+				homeBaseMenu = new HomeBaseMenu(this.game,this.player);
 
-		//Display buildings
-		this.showBuildings();
+				//Display buildings
+				this.showBuildings();
 
-		//Test alert
-		//this.alert.show('success','Message','Title',4);
+				//Test alert
+				//this.alert.show('success','Message','Title',4);
 
-		//set up TileSelector
-		this.tileSelector = new TileSelector(this.game);
+				//set up TileSelector
+				this.tileSelector = new TileSelector(this.game);
+				this.game.input.addMoveCallback(this.checkSelectorSatus,this);
+				//Show HUD
+				this.hud.show();
+				this.hud.buildButton.events.onInputDown.add(this.showBuildOptions,this);
 
-		//Show HUD
-		this.hud.show();
-		this.hud.buildButton.events.onInputDown.add(this.showBuildOptions,this);
-
-			//Test
-		//this.contract.createPlayer();
+					//Test
+				//this.contract.createPlayer();
 
 		},
-
-
-
-
-
-
-
 		update: function(){
 			var extreme = {
 				x: ( cursors.left.isDown && game.camera.atLimit.x) || ( cursors.right.isDown && game.camera.atLimit.x ),
@@ -88,31 +81,31 @@ Playing.prototype = {
 				return{x:x,y:y};
 			}
 
+		 if (cursors.up.isDown)
+      {
+				game.camera.y -= 4;
+				this.background.y -= move(this).y
+      }
+      else if (cursors.down.isDown)
+      {
+          game.camera.y += 4;
+					this.background.y += move(this).y
+      }
 
-
-			 if (cursors.up.isDown)
-		        {
-							game.camera.y -= 4;
-							this.background.y -= move(this).y
-		        }
-		        else if (cursors.down.isDown)
-		        {
-		            game.camera.y += 4;
-								this.background.y += move(this).y
-		        }
-
-		        if (cursors.left.isDown)
-		        {
-		            game.camera.x -= 4;
-								this.background.x -= move(this).x
-		        }
-		        else if (cursors.right.isDown)
-		        {
-		            game.camera.x += 4;
-								this.background.x += move(this).x
-		        }
+      if (cursors.left.isDown)
+      {
+          game.camera.x -= 4;
+					this.background.x -= move(this).x
+      }
+      else if (cursors.right.isDown)
+      {
+          game.camera.x += 4;
+					this.background.x += move(this).x
+      }
 
 			//this.background.tilePosition.x = 0.5;//Rolling background
+
+
 
 		},
 			actionOnClick: function(){
@@ -171,8 +164,6 @@ Playing.prototype = {
 			base.events.onInputOver.add(this.showMenu, this);
 		},
 		showMenu: function(){
-
-
 			homeBaseMenu.show();
 		},
 		showBuildings: function(){
@@ -183,14 +174,12 @@ Playing.prototype = {
 					x : 200,
 					y : 150,
 					level : 2,
-					resource: {resource:'sand'},
+					resource: {resource:'wood'},
 					maxStorage: 500,
 				}
 			}
 
-			this.buildings.one = new Building(this.game,config.house);
-
-			console.log(this.buildings)
+			this.buildings.push( new Building(this.game,config.house) );
 		},
 
 
@@ -239,12 +228,48 @@ Playing.prototype = {
 			});
 
 		},
-		pickBuildingLocation: function(type){
-				console.log(type)
-				this.tileSelector.show();
-
+		checkSelectorSatus: function(){
+			if(this.tileSelector.isShown){
+				let selector = this.tileSelector.selector,
+				lineWidth = selector.lineWidth,
+				error;
+				this.buildings.forEach(function(building){
+					let instance = building.instance;
+					if(
+						((instance.x <= selector.x-lineWidth   &&  instance.x+instance.width >= selector.x-lineWidth ) ||
+				    (instance.x+instance.width >= selector.x+selector.width-(3*lineWidth) && instance.x <= selector.x+selector.width-(3*lineWidth) ) )
+						&&
+						((instance.y <= selector.y-lineWidth && instance.y+instance.height >= selector.y-lineWidth) ||
+						(instance.y+instance.height >= selector.y+selector.height-(3*lineWidth) && instance.y <= selector.y+selector.height-(3*lineWidth) ) )
+					)
+							error = true;
+				})
+				this.tileSelector.stateChanged(error);
+			}
 		},
-		addNewBuilding: function(type){
+		pickBuildingLocation: function(type){
+				this.tileSelector.show();
+				this.selectedBuilding = type;
+				this.tileSelector.selector.events.onInputDown.add(this.addNewBuilding,this)
+		},
+		addNewBuilding: function(box){
+				if(this.tileSelector.overlapping)
+					return;
+				let type = this.selectedBuilding;
+				this.selectedBuilding = null;
+				var buildconfig = {
+					x : box.x,
+					y : box.y,
+					level : 1,
+					resource: {resource:type},
+					maxStorage: 500,
+				}
+				let build = new Building(this.game,buildconfig);
+
+				console.log(build)
+				this.buildings.push(build);
+
+
 
 		}
 

@@ -46,6 +46,8 @@
 			game.load.spritesheet('hud_buttons', 'assets/hudButtons.png', 184, 64);
 			//game.load.spritesheet('hud_buttons', 'assets/hudButtons.png', 134, 56);
 
+			game.load.spritesheet("houses", "assets/houses_top.png",125,125)
+
 				},
 
 				create:function(){
