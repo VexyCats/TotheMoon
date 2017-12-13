@@ -59,11 +59,12 @@ Contract.prototype = {
 
   },
   createPlayer: function(){
-    const name = prompt('Kindly set your Screen name');
+    //const name = prompt('Kindly set your Screen name');
+    alert('Creating new User');
 
     this.contract.createAccount(/*name,*/function(e,r){
       if(e)
-        console.error(e);
+        return console.error(e);
       console.log('player created',r);
     })
   },
@@ -71,7 +72,7 @@ Contract.prototype = {
 
     this.contract.save(buildingData,upgradeData,function(e,r){
       if(e)
-        console.error(e);
+        return console.error(e);
       console.log('player created',r);
     })
   },
@@ -79,13 +80,13 @@ Contract.prototype = {
 
     this.contract.harvestResources(buildingsToHarvest,function(e,r){
       if(e)
-        console.error(e);
+        return console.error(e);
       console.log('player created',r);
     })
   },
   genericCallback: function(e,r,callback){
       if(e){
-        console.error(e);
+        return console.error(e);
       }
       console.log(r)
       return callback(e,r);
