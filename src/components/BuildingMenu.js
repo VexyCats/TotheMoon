@@ -18,6 +18,7 @@ BuildingMenu.prototype = {
     show: function(){
       if(this.buildMenuGroup){
         this.buildMenuGroup.revive();
+        this.game.world.bringToTop(this.buildMenuGroup);
         return;
       }
 
