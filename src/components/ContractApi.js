@@ -41,13 +41,27 @@ var Contract = function(){
 
 Contract.prototype = {
 
+  isPlayer: function(){
+    let that = this;
+    this.contract.listOfPlayers(this.accounts[0],function(e,r){
+      if(e){
+        console.error(e);
+      }
+      console.log(r)
+      //return Number(r[2]) > 0;
+      if(Number(r[2]) > 0)
+      return true;
+      else
+        that.createPlayer();
+    })
+  },
   fetchPlayer: function(){
 
   },
   createPlayer: function(){
     const name = prompt('Kindly set your Screen name');
 
-    this.contract.createAccount(name,function(e,r){
+    this.contract.createAccount(/*name,*/function(e,r){
       if(e)
         console.error(e);
       console.log('player created',r);
@@ -68,6 +82,13 @@ Contract.prototype = {
         console.error(e);
       console.log('player created',r);
     })
+  },
+  genericCallback: function(e,r,callback){
+      if(e){
+        console.error(e);
+      }
+      console.log(r)
+      return callback(e,r);
   }
 
 
