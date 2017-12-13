@@ -15,6 +15,7 @@ var Playing = function(cgame){
 	this.alert = new Alert(cgame);
 	this.hud = new HUD(cgame);
 	this.buildingMenu = new BuildingMenu(cgame);
+	this.api = new Contract();
 }
 
 
@@ -35,10 +36,10 @@ Playing.prototype = {
 		create: function(){
 
 				cursors = this.game._cursors;//TODO store cursors values for use
-
 				this.background = this.drawMap();
 
 				/* create new player account and set resources */
+				console.log(this.api.isPlayer());
 
 				this.player = new Player(
 					{screenName: 'Demo Player'}
