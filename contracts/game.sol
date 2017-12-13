@@ -6,7 +6,7 @@ pragma solidity ^0.4.3;
 contract Game {
     
     address owner;
-    TokenERC20 r;
+    TokenERC20 public r;
     modifier onlyOwner {
         require(msg.sender == owner);
         _;
@@ -65,7 +65,7 @@ mapping( uint => mapping( uint => Harvest ) ) harvestValues;
     
     
     function Game() {
-        
+        owner = msg.sender;
     //set Harvest values starter building (gives wood)
     harvestValues[0][1].Wood = 10;
     //set harvest Values second building (gives water, soil)
@@ -84,16 +84,16 @@ mapping( uint => mapping( uint => Harvest ) ) harvestValues;
     // set resourcesRequired values for first building
     requiredResources[0][0].Wood = 10;
      // set resourcesRequired values for seond building
-    requiredResources[0][1].Wood = 100;
+    requiredResources[1][0].Wood = 100;
      // set resourcesRequired values for third building
-    requiredResources[0][2].Wood = 500;
-    requiredResources[0][2].Water = 200;
+    requiredResources[2][0].Wood = 500;
+    requiredResources[2][0].Water = 200;
      // set resourcesRequired values for fourth building
-     requiredResources[0][3].Soil = 100;
-    requiredResources[0][3].Water = 500;
+     requiredResources[3][0].Soil = 100;
+    requiredResources[3][0].Water = 500;
       // set resourcesRequired values for fifth building
-    requiredResources[0][4].Soil = 5000;
-    requiredResources[0][4].Metal = 1000;
+    requiredResources[4][0].Soil = 5000;
+    requiredResources[4][0].Metal = 1000;
     
     
     
@@ -105,15 +105,15 @@ mapping( uint => mapping( uint => Harvest ) ) harvestValues;
     *
     */
     function setResourceContract(address addr)  onlyOwner {
-        TokenERC20 r = TokenERC20(addr);
+         r = TokenERC20(addr);
         
     }
- function createAccount(string _screenName) returns (uint _playerID)  { 
+ function createAccount()  { 
+     totalPlayers++;
      
-     
-     listOfPlayers[msg.sender].playerID = totalPlayers++;
+     listOfPlayers[msg.sender].playerID = totalPlayers;
      r.harvestResource(20,0,0,0,0, msg.sender);
-     return listOfPlayers[msg.sender].playerID;
+     
         }
         
         /* Needs to save the player data
@@ -277,7 +277,9 @@ contract TokenERC20 {
         totalSupply = initialSupply * 10 ** uint256(decimals);  // Update total supply with the decimal amount
         balanceOf[msg.sender].Wood = totalSupply;                // Give the creator all initial tokens
         name = tokenName;                                   // Set the name for display purposes
-        symbol = tokenSymbol;                               // Set the symbol for display purposes
+        symbol = tokenSymbol;    
+        owner = msg.sender;
+        // Set the symbol for display purposes
     }
     
     function getBalances(address _addr) public constant returns (uint[5]){
