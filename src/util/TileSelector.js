@@ -10,8 +10,10 @@ TileSelector = function(cgame){
 TileSelector.prototype = {
   show: function(){
     this.isShown = true;
-    if(this.selector)
+    if(this.selector){
+      game.world.bringToTop(this.selector);
       return this.selector.revive();
+    }
 
     var box = game.add.graphics(15,15);
 
