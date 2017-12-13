@@ -12,7 +12,7 @@ const settings = {
   },
   output: {
     filename: "js/[name].js",
-    publicPath: "/",
+    publicPath: "./",
     path: path.resolve("dist")
   },
   resolve: {
