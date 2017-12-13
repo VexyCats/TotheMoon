@@ -1,11 +1,23 @@
 const BuldingTypes = {
       wood:{
-        sprite:'house'
+        sprite:'houses',
+        frame: 4
       },
-      soil:{},
-      water:{},
-      sand:{
-        sprite:'house'
+      soil:{
+        sprite:'houses',
+        frame: 2
+      },
+      water:{
+        sprite:'houses',
+        frame: 0
+      },
+      metal:{
+        sprite:'houses',
+        frame: 1
+      },
+      oxygen:{
+        sprite:'houses',
+        frame: 3
       }
     }
 

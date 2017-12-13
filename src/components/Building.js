@@ -4,6 +4,7 @@ import{BuldingTypes,BuildingFonts} from '../config/building';
 var Building = function(cgame,config){
   this.game = cgame;
   config = config || {};
+  config.resource.resource = config.resource.resource.toLowerCase();
   var errors=[];
 
   if(typeof cgame == 'undefined'){
@@ -12,7 +13,7 @@ var Building = function(cgame,config){
   }
 
   if(typeof BuldingTypes[config.resource.resource] == 'undefined'){
-    console.error('Building type '+config.type+' does not exist');
+    console.error('Building type '+config.resource.resource+' does not exist');
     return false;
   }
 
@@ -49,7 +50,7 @@ Building.prototype = {
   requiredConfig:["x","y","resource","level","maxStorage"],
   show: function(){
     var buildingProp = BuldingTypes[this.state.resource.resource];
-    var unit =  this.game.add.sprite(this.state.x,this.state.y,buildingProp.sprite);
+    var unit =  this.game.add.sprite(this.state.x,this.state.y,buildingProp.sprite,buildingProp.frame);
     if(buildingProp.frameName) unit.frameName = buildingProp.frameName;
     this.instance = unit;
 
