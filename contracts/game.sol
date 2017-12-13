@@ -1,10 +1,10 @@
-pragma solidity ^0.4.3;
+pragma solidity ^0.4.18;
 
 
 
 
 contract Game {
-    
+
     address owner;
     TokenERC20 public r;
     modifier onlyOwner {
