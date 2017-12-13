@@ -18,14 +18,17 @@ HUD.prototype ={
     this.getButton('saveButton');
     this.saveButton.inputEnabled = true;
     Actions.addHover(this.saveButton);
+    Actions.addClicked(this.saveButton);
 
     this.getButton('buildButton');
     this.buildButton.inputEnabled = true;
     Actions.addHover(this.buildButton);
+    Actions.addClicked(this.buildButton);
 
     this.getButton('harvestButton');
     this.harvestButton.inputEnabled = true;
     Actions.addHover(this.harvestButton);
+    Actions.addClicked(this.harvestButton);
 
 
     var hudGroup = this.fetchGroup();
