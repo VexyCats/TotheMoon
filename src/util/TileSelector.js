@@ -14,9 +14,7 @@ TileSelector.prototype = {
       return this.selector.revive();
 
     var box = game.add.graphics(15,15);
-    box.beginFill(tileSelectorConfig.color.fill,tileSelectorConfig.opacity.fill);
-    box.lineStyle(tileSelectorConfig.width.line, tileSelectorConfig.color.line, tileSelectorConfig.opacity.line);
-    box.drawRect(0, 0, tileSelectorConfig.width.box, tileSelectorConfig.height.box);
+
     box.inputEnabled = true;
     box.events.onInputDown.add(this.hide,this);
     //game.physics.enable(box, Phaser.Physics.ARCADE);
@@ -24,18 +22,27 @@ TileSelector.prototype = {
     game.input.addMoveCallback(this.update,this);
 
     this.selector = box;
+    this.drawSelector();
   },
   hide: function(){
     this.isShown = false;
     this.selector.kill();
   },
+  drawSelector: function(lineColor,fillColor){
+    this.selector.beginFill(fillColor || tileSelectorConfig.color.fill,tileSelectorConfig.opacity.fill);
+    this.selector.lineStyle(tileSelectorConfig.width.line,lineColor || tileSelectorConfig.color.line, tileSelectorConfig.opacity.line);
+    this.selector.drawRect(0, 0, tileSelectorConfig.width.box, tileSelectorConfig.height.box);
+  },
   stateChanged: function(error){
-    this.selector.lineColor = error?tileSelectorConfig.color.errorLine : tileSelectorConfig.color.line;
+    this.overlapping = error;
+    let lineColor = error?tileSelectorConfig.color.errorLine : tileSelectorConfig.color.line;
+    let fillColor = error?tileSelectorConfig.color.errorFill : tileSelectorConfig.color.fill;
+    this.selector.clear();
+    this.drawSelector(lineColor,fillColor);
   },
   update:function(a,b,c){
       if(!this.isShown)
         return;
-      this.stateChanged()
       const that = this;
       game.add.tween(this.selector).to({
         x:b+game.camera.x-(this.selector.width/2),
